@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easifay Tools - Free AI & Creative Creative Utilities</title>
+    <style>
+        :root {
+            --primary: #38bdf8;
+            --background: #0b1329;
+            --surface: #1c2541;
+            --surface-hover: #222e50;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+        body, html {
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-image: radial-gradient(circle at 50% 0%, #1e3a8a 0%, var(--background) 70%);
+            background-attachment: fixed;
+        }
+        header { padding: 50px 20px 30px 20px; text-align: center; }
+        header h1 { margin: 0; color: var(--text); font-size: 38px; font-weight: 800; }
+        header h1 span { color: var(--primary); }
+        header p { margin: 12px 0 0 0; color: var(--muted); font-size: 16px; max-width: 600px; margin-inline: auto; }
+        .container { max-width: 1100px; margin: 20px auto 60px auto; padding: 0 20px; box-sizing: border-box; }
+        .ad-banner { background: rgba(28, 37, 65, 0.4); text-align: center; padding: 22px; margin-bottom: 40px; border-radius: 16px; color: var(--primary); font-weight: 600; border: 1px dashed rgba(56, 189, 248, 0.4); backdrop-filter: blur(10px); }
+        .category-title { font-size: 22px; margin-top: 50px; font-weight: 700; color: var(--text); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-top: 20px; }
+        .tool-card { background-color: var(--surface); padding: 28px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box; }
+        .tool-card:hover { transform: translateY(-5px); background-color: var(--surface-hover); border-color: rgba(56, 189, 248, 0.2); box-shadow: 0 15px 35px rgba(56, 189, 248, 0.1); }
+        input, button, select, textarea { width: 100%; padding: 14px; margin-top: 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(11, 19, 41, 0.5); color: white; box-sizing: border-box; font-size: 15px; }
+        button { background-color: var(--primary); color: #0b1329; font-weight: 700; border: none; cursor: pointer; }
+        button:hover { background-color: #7dd3fc; }
+        canvas { max-width: 100%; margin-top: 15px; border-radius: 12px; display: none; }
+        #textOutput { height: 120px; resize: none; }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Easifay <span>Tools</span></h1>
+    <p>Experience the ultimate catalog of fast, secure, and beautiful online utility tools completely for free.</p>
+</header>
+<div class="container">
+    <!-- PLACE YOUR FUTURE ADSTERRA CODE HERE -->
+    <div class="ad-banner">🌐 Advertisement Area (Your Ad Code Will Go Here)</div>
+    <div class="category-title">🎙️ AI & Voice Tools</div>
+    <div class="grid">
+        <div class="tool-card">
+            <div>
+                <h3>Speech to Text Converter</h3>
+                <p style="color: var(--muted); font-size:14px; margin:0;">Transcribe your voice into written text in real-time instantly.</p>
+                <select id="langSelect"><option value="en-US">English (US)</option><option value="ar-SY">العربية (سوريا)</option></select>
+                <textarea id="textOutput" placeholder="Your spoken text will appear here..." readonly></textarea>
+                <div id="recStatus" style="margin-top:12px; font-weight:600; color:#fbbf24; font-size:14px;">Status: Idle</div>
+            </div>
+            <div>
+                <button id="startBtn" onclick="startConverting()">Start Microphone 🎤</button>
+                <button id="stopBtn" style="background:var(--danger); color:white; display:none;" onclick="stopConverting()">Stop Microphone 🛑</button>
+                <button style="background:var(--success); color:white; margin-top:8px;" onclick="copyText()">Copy Text 📋</button>
+            </div>
+        </div>
+    </div>
+    <div class="category-title">🎨 Creative & Image Tools</div>
+    <div class="grid">
+        <div class="tool-card">
+            <div>
+                <h3>Magic Pixel Art Maker</h3>
+                <p style="color: var(--muted); font-size:14px; margin:0;">Convert ordinary photos into amazing retro gaming 8-bit art style.</p>
+                <input type="file" id="pixelUpload" accept="image/*">
+                <input type="range" id="pixelSize" min="4" max="24" value="8">
+                <canvas id="pixelCanvas"></canvas>
+            </div>
+            <div>
+                <button onclick="makePixelArt()">Generate Pixel Art ✨</button>
+                <a id="pixelDownload" style="display:none; text-align:center; text-decoration:none; background:var(--success); color:white; padding:14px; margin-top:10px; border-radius:10px; font-weight:700;">Download Image 📥</a>
+            </div>
+        </div>
+        <div class="tool-card">
+            <div>
+                <h3>Image Resizer & Compressor</h3>
+                <p style="color: var(--muted); font-size:14px; margin:0;">Reduce image size and adjust dimensions quickly without quality loss.</p>
+                <input type="file" id="compUpload" accept="image/*">
+                <input type="number" id="imgWidth" placeholder="Target Width (pixels) e.g. 800">
+                <canvas id="compCanvas"></canvas>
+            </div>
+            <div>
+                <button onclick="compressImage()">Resize & Compress 📦</button>
+                <a id="compDownload" style="display:none; text-align:center; text-decoration:none; background:var(--success); color:white; padding:14px; margin-top:10px; border-radius:10px; font-weight:700;">Download Image 📥</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let recognition;
+    if ('webkitSpeechRecognition' in window || 'speechRecognition' in window) {
+        const SpeechRecognition = window.webkitSpeechRecognition || window.speechRecognition;
+        recognition = new SpeechRecognition(); recognition.continuous = true; recognition.interimResults = true;
+        recognition.onstart = () => { document.getElementById('recStatus').innerText = "Status: Listening..."; document.getElementById('startBtn').style.display = 'none'; document.getElementById('stopBtn').style.display = 'block'; };
+        recognition.onend = () => { document.getElementById('recStatus').innerText = "Status: Idle"; document.getElementById('startBtn').style.display = 'block'; document.getElementById('stopBtn').style.display = 'none'; };
+        recognition.onresult = (e) => { let finalT = ''; for (let i = e.resultIndex; i < e.results.length; ++i) { if (e.results[i].isFinal) finalT += e.results[i].transcript + ' '; } if(finalT) document.getElementById('textOutput').value += finalT; };
+    }
+    function startConverting() { if(!recognition) return alert('Use Chrome.'); recognition.lang = document.getElementById('langSelect').value; recognition.start(); }
+    function stopConverting() { recognition.stop(); }
+    function copyText() { const tx = document.getElementById('textOutput'); tx.select(); document.execCommand('copy'); alert('Copied!'); }
+    let pImg = new Image(); document.getElementById('pixelUpload').onchange = (e) => { let r = new FileReader(); r.onload = (ev) => pImg.src = ev.target.result; r.readAsDataURL(e.target.files); };
+    function makePixelArt() { if(!pImg.src) return alert('Upload image'); const cv = document.getElementById('pixelCanvas'); const ctx = cv.getContext('2d'); const size = parseInt(document.getElementById('pixelSize').value); cv.width = pImg.width; cv.height = pImg.height; ctx.drawImage(pImg, 0, 0); const data = ctx.getImageData(0, 0, cv.width, cv.height).data; for (let y = 0; y < cv.height; y += size) { for (let x = 0; x < cv.width; x += size) { let idx = (y * cv.width + x) * 4; ctx.fillStyle = `rgb(${data[idx]},${data[idx+1]},${data[idx+2]})`; ctx.fillRect(x, y, size, size); } } cv.style.display = 'block'; const dl = document.getElementById('pixelDownload'); dl.style.display = 'block'; dl.href = cv.toDataURL(); dl.download = "pixel_art.png"; }
+    let cImg = new Image(); document.getElementById('compUpload').onchange = (e) => { let r = new FileReader(); r.onload = (ev) => cImg.src = ev.target.result; r.readAsDataURL(e.target.files); };
+    function compressImage() { if(!cImg.src) return alert('Upload image'); const cv = document.getElementById('compCanvas'); const ctx = cv.getContext('2d'); const tw = document.getElementById('imgWidth').value ? parseInt(document.getElementById('imgWidth').value) : cImg.width; const scale = tw / cImg.width; cv.width = tw; cv.height = cImg.height * scale; ctx.drawImage(cImg, 0, 0, cv.width, cv.height); cv.style.display = 'block'; const dl = document.getElementById('compDownload'); dl.style.display = 'block'; dl.href = cv.toDataURL('image/jpeg', 0.6); dl.download = "compressed.jpg"; }
+</script>
+</body>
+</html>
