@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Easifay Tools - Professional Hub</title>
+    <title>Easifay Tools - Free AI & Creative Studio</title>
     <style>
         :root {
             --primary: #38bdf8;
@@ -14,7 +14,6 @@
             --muted: #94a3b8;
             --success: #10b981;
             --danger: #ef4444;
-            --glass: rgba(28, 37, 65, 0.6);
         }
         body, html {
             background-color: var(--background);
@@ -25,194 +24,198 @@
             background-image: radial-gradient(circle at 50% 0%, #1e3a8a 0%, var(--background) 70%);
             background-attachment: fixed;
         }
-        header { padding: 40px 20px 20px 20px; text-align: center; }
-        header h1 { margin: 0; color: var(--text); font-size: 36px; font-weight: 800; }
+        header { padding: 30px 20px 15px 20px; text-align: center; }
+        header h1 { margin: 0; color: var(--text); font-size: 32px; font-weight: 800; }
         header h1 span { color: var(--primary); }
-        header p { margin: 10px 0 0 0; color: var(--muted); font-size: 15px; }
+        header p { margin: 8px 0 0 0; color: var(--muted); font-size: 14px; }
         
-        .container { max-width: 1100px; margin: 0 auto 60px auto; padding: 0 20px; box-sizing: border-box; }
+        .container { max-width: 1000px; margin: 0 auto 60px auto; padding: 0 20px; box-sizing: border-box; }
         
         .ad-banner {
             background: rgba(28, 37, 65, 0.4);
             text-align: center;
-            padding: 20px;
-            margin-bottom: 30px;
-            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 25px;
+            border-radius: 14px;
             color: var(--primary);
             font-weight: 600;
             border: 1px dashed rgba(56, 189, 248, 0.4);
             backdrop-filter: blur(10px);
+            font-size: 14px;
         }
 
-        .category-title { font-size: 20px; margin-top: 40px; font-weight: 700; color: var(--text); }
+        .category-title { font-size: 16px; margin-top: 30px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; }
         
-        /* تصميم شبكة الأيقونات والبطاقات */
+        /* تصميم شبكة الأيقونات الصغيرة الأنيقة مثل Canva */
         .icon-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-top: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 15px;
+            margin-top: 12px;
         }
         .icon-card {
             background-color: var(--surface);
-            padding: 20px;
-            border-radius: 16px;
+            padding: 15px 10px;
+            border-radius: 12px;
             text-align: center;
             cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.25s ease;
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .icon-card:hover {
-            transform: translateY(-5px);
+        .icon-card:hover, .icon-card.active-card {
+            transform: translateY(-3px);
             background-color: var(--surface-hover);
-            border-color: rgba(56, 189, 248, 0.3);
-            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.15);
+            border-color: var(--primary);
+            box-shadow: 0 8px 20px rgba(56, 189, 248, 0.15);
         }
-        .icon-card .icon {
-            font-size: 45px;
-            margin-bottom: 12px;
-            display: block;
-        }
-        .icon-card h4 { margin: 0 0 6px 0; font-size: 17px; font-weight: 600; }
-        .icon-card p { margin: 0; color: var(--muted); font-size: 12px; }
+        .icon-card .icon { font-size: 28px; margin-bottom: 8px; display: block; }
+        .icon-card h4 { margin: 0 0 4px 0; font-size: 14px; font-weight: 600; color: var(--text); }
+        .icon-card p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.2; }
 
-        /* تصميم النافذة المنبثقة الزجاجية للأدوات */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(11, 19, 41, 0.85);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0; visibility: hidden;
-            transition: all 0.3s ease;
-        }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-content {
+        /* تصميم صندوق عرض واستخدام الأداة النشطة */
+        .tool-panel {
             background: var(--surface);
-            width: 90%; max-width: 550px;
-            padding: 30px;
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-            transform: translateY(-30px);
-            transition: all 0.3s ease;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.08);
+            margin-top: 35px;
+            display: none;
         }
-        .modal-overlay.active .modal-content { transform: translateY(0); }
-        .close-btn {
-            position: absolute;
-            top: 15px; right: 20px;
-            font-size: 24px; color: var(--muted);
-            cursor: pointer; font-weight: bold;
+        .tool-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
         }
-        .close-btn:hover { color: var(--danger); }
+        .tool-panel-header h3 { margin: 0; color: var(--primary); font-size: 18px; }
+        .close-btn { font-size: 13px; color: var(--muted); cursor: pointer; font-weight: 600; background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 6px; }
+        .close-btn:hover { color: var(--danger); background: rgba(239, 68, 68, 0.1); }
 
         input, button, select, textarea {
-            width: 100%; padding: 14px; margin-top: 14px;
-            border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);
+            width: 100%; padding: 12px; margin-top: 12px;
+            border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
             background: rgba(11, 19, 41, 0.5); color: white;
             box-sizing: border-box; font-size: 14px;
         }
-        button { background-color: var(--primary); color: #0b1329; font-weight: 700; border: none; cursor: pointer; }
+        button { background-color: var(--primary); color: #0b1329; font-weight: 700; border: none; cursor: pointer; transition: 0.2s; }
         button:hover { background-color: #7dd3fc; }
-        canvas { max-width: 100%; margin-top: 15px; border-radius: 12px; display: none; }
-        textarea { height: 110px; resize: none; color: var(--primary); }
+        canvas { max-width: 100%; margin-top: 15px; border-radius: 10px; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        textarea { height: 110px; resize: none; color: var(--primary); font-weight: 600; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>Easifay <span>Tools</span></h1>
-    <p>⚡ Fast, secure, and beautiful online utility dashboard completely for free.</p>
+    <p>⚡ Fast, secure, and beautiful online utility studio completely for free.</p>
 </header>
 
 <div class="container">
-    <!-- مكان كود إعلانات أدستيرا القادم -->
     <div class="ad-banner">🌐 Advertisement Area (Your Ad Code Will Go Here)</div>
 
-    <!-- قسم أدوات الصوت -->
-    <div class="category-title">🎙️ AI & Voice Dashboard</div>
+    <!-- لوحة عرض واستخدام الأداة التي يختارها الزائر -->
+    <div id="mainToolDisplay" class="tool-panel">
+        <div class="tool-panel-header">
+            <h3 id="currentToolTitle">Tool Workspace</h3>
+            <span class="close-btn" onclick="closeWorkspace()">&times; Close Workspace</span>
+        </div>
+        <div id="currentToolContent"></div>
+    </div>
+
+    <!-- لوحة تحكم الأيقونات الصغيرة (أسلوب Canva) -->
+    <div class="category-title">🎙️ Audio Utilities</div>
     <div class="icon-grid">
-        <div class="icon-card" onclick="openTool('speechModal')">
+        <div id="card_speech" class="icon-card" onclick="activateTool('speech')">
             <span class="icon">🎙️</span>
             <h4>Speech to Text</h4>
-            <p>Convert live voice to text</p>
+            <p>Voice transcription</p>
         </div>
     </div>
 
-    <!-- قسم أدوات الصور -->
-    <div class="category-title">🎨 Design & Image Dashboard</div>
+    <div class="category-title">🎨 Graphic Utilities</div>
     <div class="icon-grid">
-        <div class="icon-card" onclick="openTool('pixelModal')">
+        <div id="card_pixel" class="icon-card" onclick="activateTool('pixel')">
             <span class="icon">👾</span>
-            <h4>Pixel Art Maker</h4>
-            <p>Turn photos to 8-bit art</p>
+            <h4>Pixel Art</h4>
+            <p>8-bit retro filter</p>
         </div>
-        <div class="icon-card" onclick="openTool('compressModal')">
+        <div id="card_compress" class="icon-card" onclick="activateTool('compress')">
             <span class="icon">📦</span>
-            <h4>Image Compressor</h4>
-            <p>Reduce image size instantly</p>
+            <h4>Compressor</h4>
+            <p>Reduce photo size</p>
         </div>
     </div>
 </div>
 
-<!-- ================= النوافذ المنبثقة للأدوات ================= -->
-
-<!-- نافذة أداة الصوت -->
-<div id="speechModal" class="modal-overlay">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeTool('speechModal')">&times;</span>
-        <h3>🎙️ Speech to Text Converter</h3>
-        <select id="langSelect"><option value="en-US">English (US)</option><option value="ar-SY">العربية (سوريا)</option></select>
-        <textarea id="textOutput" placeholder="Your spoken text will appear here..." readonly></textarea>
-        <div id="recStatus" style="margin-top:10px; font-weight:600; color:#fbbf24;">Status: Idle</div>
-        <button id="startBtn" onclick="startConverting()">Start Microphone 🎤</button>
-        <button id="stopBtn" style="background:var(--danger); color:white; display:none;" onclick="stopConverting()">Stop Microphone 🛑</button>
-        <button style="background:var(--success); color:white; margin-top:8px;" onclick="copyText()">Copy Generated Text 📋</button>
-    </div>
+<!-- كود الأدوات المخفي داخلياً والجاهز للحقن -->
+<div id="code_speech" style="display:none;">
+    <select id="langSelect"><option value="en-US">English (US)</option><option value="ar-SY">العربية (سوريا)</option></select>
+    <textarea id="textOutput" placeholder="Your spoken text will appear here..." readonly></textarea>
+    <div id="recStatus" style="margin-top:10px; font-weight:600; color:#fbbf24; font-size: 13px;">Status: Idle</div>
+    <button id="startBtn" onclick="startConverting()">Start Microphone 🎤</button>
+    <button id="stopBtn" style="background:var(--danger); color:white; display:none;" onclick="stopConverting()">Stop Microphone 🛑</button>
+    <button style="background:var(--success); color:white; margin-top:8px;" onclick="copyText()">Copy Text 📋</button>
 </div>
 
-<!-- نافذة أداة البكسل -->
-<div id="pixelModal" class="modal-overlay">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeTool('pixelModal')">&times;</span>
-        <h3>👾 Magic Pixel Art Maker</h3>
-        <input type="file" id="pixelUpload" accept="image/*">
-        <input type="range" id="pixelSize" min="4" max="24" value="8" style="padding:0; background:transparent;">
-        <canvas id="pixelCanvas"></canvas>
-        <button onclick="makePixelArt()">Generate Pixel Art ✨</button>
-        <a id="pixelDownload" style="display:none; text-align:center; text-decoration:none; background:var(--success); color:white; padding:14px; margin-top:10px; border-radius:10px; font-weight:700; display:block;">Download Masterpiece 📥</a>
-    </div>
+<div id="code_pixel" style="display:none;">
+    <input type="file" id="pixelUpload" accept="image/*">
+    <input type="range" id="pixelSize" min="4" max="24" value="8" style="padding:0; background:transparent;">
+    <canvas id="pixelCanvas"></canvas>
+    <button onclick="makePixelArt()">Generate Pixel Art ✨</button>
+    <a id="pixelDownload" style="display:none; text-align:center; text-decoration:none; background:var(--success); color:white; padding:12px; margin-top:10px; border-radius:8px; font-weight:700; display:block;">Download Image 📥</a>
 </div>
 
-<!-- نافذة أداة الضغط -->
-<div id="compressModal" class="modal-overlay">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeTool('compressModal')">&times;</span>
-        <h3>📦 Image Resizer & Compressor</h3>
-        <input type="file" id="compUpload" accept="image/*">
-        <input type="number" id="imgWidth" placeholder="Target Width (pixels) e.g. 800">
-        <canvas id="compCanvas"></canvas>
-        <button onclick="compressImage()">Resize & Compress Image 📦</button>
-        <a id="compDownload" style="display:none; text-align:center; text-decoration:none; background:var(--success); color:white; padding:14px; margin-top:10px; border-radius:10px; font-weight:700; display:block;">Download Image 📥</a>
-    </div>
+<div id="code_compress" style="display:none;">
+    <input type="file" id="compUpload" accept="image/*">
+    <input type="number" id="imgWidth" placeholder="Target Width (pixels) e.g. 800">
+    <canvas id="compCanvas"></canvas>
+    <button onclick="compressImage()">Resize & Compress Image 📦</button>
+    <a id="compDownload" style="display:none; text-align:center; text-decoration:none; background:var(--success); color:white; padding:12px; margin-top:10px; border-radius:8px; font-weight:700; display:block;">Download Image 📥</a>
 </div>
 
 <script>
-    // التحكم بفتح وإغلاق النوافذ المنبثقة
-    function openTool(id) { document.getElementById(id).classList.add('active'); }
-    function closeTool(id) { document.getElementById(id).classList.remove('active'); if(id==='speechModal') stopConverting(); }
+    // نظام تشغيل التبويبات الفوري والمضمون للهواتف
+    function activateTool(type) {
+        stopConverting();
+        
+        // إزالة الحاشية النشطة من جميع البطاقات
+        document.querySelectorAll('.icon-card').forEach(card => card.classList.remove('active-card'));
+        
+        const panel = document.getElementById('mainToolDisplay');
+        const content = document.getElementById('currentToolContent');
+        const title = document.getElementById('currentToolTitle');
+        const selectedCard = document.getElementById('card_' + type);
+        
+        if(selectedCard) selectedCard.classList.add('active-card');
 
-    // البرمجيات الذكية للأدوات
-    let recognition;
-    if ('webkitSpeechRecognition' in window || 'speechRecognition' in window) {
-        const SpeechRecognition = window.webkitSpeechRecognition || window.speechRecognition;
-        recognition = new SpeechRecognition(); recognition.continuous = true; recognition.interimResults = false;
-        recognition.onstart = () => { document.getElementById('recStatus').innerText = "Status: Listening... Speak now!"; document.getElementById('startBtn').style.display = 'none'; document.getElementById('stopBtn').style.display = 'block'; };
-        recognition.onend = () => { document.getElementById('recStatus').innerText = "Status: Idle"; document.getElementById('startBtn').style.display = 'block'; document.getElementById('stopBtn').style.display = 'none'; };
-        recognition.onresult = (e) => { let txt = e.results[e.results.length - 1].transcript; document.getElementById('textOutput').value += txt + ' '; };
+        if(type === 'speech') {
+            title.innerText = "🎙️ Speech to Text Converter";
+            content.innerHTML = document.getElementById('code_speech').innerHTML;
+            initSpeech();
+        } else if(type === 'pixel') {
+            title.innerText = "👾 Magic Pixel Art Maker";
+            content.innerHTML = document.getElementById('code_pixel').innerHTML;
+            initPixel();
+        } else if(type === 'compress') {
+            title.innerText = "📦 Image Resizer & Compressor";
+            content.innerHTML = document.getElementById('code_compress').innerHTML;
+            initCompress();
+        }
+        
+        panel.style.display = 'block';
+        window.scrollTo({ top: panel.offsetTop - 20, behavior: 'smooth' });
     }
-    function startConverting() { if(!recognition) return alert('Open in Google Chrome.'); recognition.lang = document.getElementById('langSelect').value; recognition.start(); }
+
+    function closeWorkspace() {
+        stopConverting();
+        document.getElementById('mainToolDisplay').style.display = 'none';
+        document.querySelectorAll('.icon-card').forEach(card => card.classList.remove('active-card'));
+    }
+
+    // البرمجيات التشغيلية الخلفية للأدوات
+    let recognition;
+    function initSpeech() {
+        if ('webkitSpeechRecognition' in window || 'speechRecognition' in window) {
