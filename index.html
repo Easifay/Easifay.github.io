@@ -4,131 +4,198 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Easifay Tools</title>
-    <!-- استدعاء مكتبة التصميم المستقرة -->
+    <!-- استدعاء مكتبة التصميم المستقرة والسريعة -->
     <script src="https://tailwindcss.com"></script>
-    <!-- مكتبة الـ QR كود الشغالة محلياً -->
+    <!-- مكتبة الـ QR كود الشغالة محلياً بدون سيرفر -->
     <script src="https://cloudflare.com"></script>
     <style>
-        /* الألوان الدقيقة المقتبسة من صورتك الأصلية */
-        body { background-color: #131e31 !important; }
-        .tool-card { background-color: #1c293e !important; border-color: #2b3a52 !important; }
+        /* الألوان الدقيقة الفخمة المأخوذة من صورتك الأصلية تماماً */
+        body { background-color: #0b132b !important; }
+        .hub-container { background-color: #111a36 !important; border-color: #1c2541 !important; }
     </style>
 </head>
-<body class="text-slate-300 font-sans antialiased min-h-screen">
+<body class="text-slate-300 font-sans antialiased min-h-screen pb-12">
 
-    <!-- MAIN HOME PAGE SCREEN -->
-    <div id="homeScreen" class="block pb-12">
-        <header class="border-b border-slate-800 bg-[#1c293e]/80 backdrop-blur sticky top-0 z-50 px-6 py-4 flex justify-between items-center shadow-md">
-            <h1 class="text-xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Easifay Tools</h1>
-            <span class="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-1 rounded-full font-mono">v2.0</span>
-        </header>
+    <!-- شريط العنوان العلوي الثابت -->
+    <header class="border-b border-[#1c2541] bg-[#111a36]/90 backdrop-blur sticky top-0 z-50 px-6 py-4 flex justify-between items-center shadow-md">
+        <h1 class="text-lg font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Easifay Tools</h1>
+        <span class="text-[10px] bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded-full font-mono">v2.0</span>
+    </header>
 
-        <main class="max-w-6xl mx-auto px-4 mt-8 space-y-10">
-            <!-- 1️⃣ IMAGE TOOLS -->
-            <section class="space-y-4">
-                <h2 class="text-xs font-semibold text-slate-400 tracking-wider uppercase flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> IMAGE TOOLS
-                </h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                    <div onclick="showTool('upscaler', 'AI Image Upscaler')" class="tool-card cursor-pointer flex items-center gap-3 p-3 rounded-xl border active:scale-95 transition duration-150 shadow-md">
-                        <div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 text-sm shrink-0">✨</div>
-                        <div><h3 class="font-medium text-xs text-slate-200">AI Image Upscaler</h3><p class="text-[10px] text-slate-500">Enhance quality</p></div>
-                    </div>
-                    <div onclick="showTool('bg-remover', 'Background Remover')" class="tool-card cursor-pointer flex items-center gap-3 p-3 rounded-xl border active:scale-95 transition duration-150 shadow-md">
-                        <div class="w-8 h-8 rounded-full bg-indigo-500/10 flex items-center justify-center text-indigo-400 text-sm shrink-0">✂️</div>
-                        <div><h3 class="font-medium text-xs text-slate-200">Background Remover</h3><p class="text-[10px] text-slate-500">Remove backgrounds</p></div>
-                    </div>
-                </div>
-            </section>
+    <!-- 📱 شاشة القائمة الرئيسية للأدوات (تختفي وتظهر مثل الراوتر) -->
+    <div id="mainDashboard" class="block max-w-4xl mx-auto px-4 mt-6 space-y-8">
 
-            <!-- 2️⃣ VIDEO & AUDIO TOOLS -->
-            <section class="space-y-4">
-                <h2 class="text-xs font-semibold text-slate-400 tracking-wider uppercase flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> VIDEO & AUDIO TOOLS
-                </h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                    <div onclick="showTool('vocal-remover', 'Vocal Remover')" class="tool-card cursor-pointer flex items-center gap-3 p-3 rounded-xl border active:scale-95 transition duration-150 shadow-md">
-                        <div class="w-8 h-8 rounded-full bg-lime-500/10 flex items-center justify-center text-lime-400 text-sm shrink-0">🎵</div>
-                        <div><h3 class="font-medium text-xs text-slate-200">Vocal Remover</h3><p class="text-[10px] text-slate-500">Split music tracks</p></div>
-                    </div>
+        <!-- 1️⃣ IMAGE TOOLS -->
+        <section class="hub-container p-4 rounded-2xl border shadow-lg space-y-4">
+            <h2 class="text-xs font-bold text-blue-400 tracking-wider uppercase flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> IMAGE TOOLS
+            </h2>
+            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-y-6 gap-x-2">
+                <div onclick="switchPage('upscaler', 'AI Image Upscaler')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">✨</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">AI Upscaler</span>
                 </div>
-            </section>
-            <!-- 3️⃣ AI, DOCUMENTS & DIGITAL TOOLS -->
-            <section class="space-y-4">
-                <h2 class="text-xs font-semibold text-slate-400 tracking-wider uppercase flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> AI, DOCUMENTS & DIGITAL TOOLS
-                </h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                    <div onclick="showTool('qr-generator', 'QR Code Generator')" class="tool-card cursor-pointer flex items-center gap-3 p-3 rounded-xl border active:scale-95 transition duration-150 shadow-md">
-                        <div class="w-8 h-8 rounded-full bg-rose-500/10 flex items-center justify-center text-rose-400 text-sm shrink-0">🔗</div>
-                        <div><h3 class="font-medium text-xs text-slate-200">QR Code Generator</h3><p class="text-[10px] text-slate-500">Create QR codes</p></div>
-                    </div>
-                    <div onclick="showTool('password-maker', 'Password Maker')" class="tool-card cursor-pointer flex items-center gap-3 p-3 rounded-xl border active:scale-95 transition duration-150 shadow-md">
-                        <div class="w-8 h-8 rounded-full bg-violet-500/10 flex items-center justify-center text-violet-400 text-sm shrink-0">🔑</div>
-                        <div><h3 class="font-medium text-xs text-slate-200">Password Maker</h3><p class="text-[10px] text-slate-500">Strong passwords</p></div>
-                    </div>
+                <div onclick="switchPage('bg-remover', 'Background Remover')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">✂️</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">BG Remover</span>
                 </div>
-            </section>
-        </main>
+                <div onclick="switchPage('ocr', 'OCR Text Extractor')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">📝</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">OCR Text</span>
+                </div>
+                <div onclick="switchPage('converter', 'Format Converter')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">🔄</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">Converter</span>
+                </div>
+                <div onclick="switchPage('compressor', 'Image Compressor')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">🗜️</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">Compressor</span>
+                </div>
+                <div onclick="switchPage('pixel-art', 'Pixel Art Creator')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">🎨</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">Pixel Art</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2️⃣ VIDEO & AUDIO TOOLS -->
+        <section class="hub-container p-4 rounded-2xl border shadow-lg space-y-4">
+            <h2 class="text-xs font-bold text-emerald-400 tracking-wider uppercase flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> VIDEO & AUDIO TOOLS
+            </h2>
+            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-y-6 gap-x-2">
+                <div onclick="switchPage('video-cutter', 'Video Cutter & Compressor')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">🎬</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">Video Cutter</span>
+                </div>
+                <div onclick="switchPage('video-filters', 'Video Filters & Effects')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">🎥</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">Video Filter</span>
+                </div>
+                <div onclick="switchPage('vocal-remover', 'Vocal Remover & Audio Splitter')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-lime-500/10 border border-lime-500/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">🎵</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">Vocal Split</span>
+                </div>
+            </div>
+        </section>
+        <!-- 3️⃣ TEXT & WRITING TOOLS -->
+        <section class="hub-container p-4 rounded-2xl border shadow-lg space-y-4">
+            <h2 class="text-xs font-bold text-amber-400 tracking-wider uppercase flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> TEXT & WRITING TOOLS
+            </h2>
+            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-y-6 gap-x-2">
+                <div onclick="switchPage('speech-to-text', 'Speech to Text')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">🎙️</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">SpeechToText</span>
+                </div>
+                <div onclick="switchPage('text-to-speech', 'Text to Speech')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">🔊</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">TextToSpeech</span>
+                </div>
+                <div onclick="switchPage('word-counter', 'Word Counter')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">📊</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">Word Count</span>
+                </div>
+                <div onclick="switchPage('text-cleaner', 'Text Cleaner')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-yellow-600/10 border border-yellow-600/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">🧹</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">Text Cleaner</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4️⃣ AI, DOCUMENTS & DIGITAL TOOLS -->
+        <section class="hub-container p-4 rounded-2xl border shadow-lg space-y-4">
+            <h2 class="text-xs font-bold text-rose-400 tracking-wider uppercase flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> AI, DOCUMENTS & DIGITAL TOOLS
+            </h2>
+            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-y-6 gap-x-2">
+                <div onclick="switchPage('pdf-chat', 'Chat with PDF')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">📕</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">PDF Chat</span>
+                </div>
+                <div onclick="switchPage('ai-detector', 'AI Text Detector')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">🤖</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">AI Detector</span>
+                </div>
+                <div onclick="switchPage('qr-generator', 'QR Code Generator')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">🔗</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">QR Generator</span>
+                </div>
+                <div onclick="switchPage('password-maker', 'Password Maker')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">🔑</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">Pass Maker</span>
+                </div>
+                <div onclick="switchPage('age-calculator', 'Age Calculator')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">📅</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">Age Calc</span>
+                </div>
+                <div onclick="switchPage('salary-calc', 'Salary & Percentage Calculator')" class="flex flex-col items-center text-center cursor-pointer group">
+                    <div class="w-12 h-12 rounded-full bg-pink-600/10 border border-pink-500/20 flex items-center justify-center text-lg shadow-inner group-active:scale-90 transition duration-100">🧮</div>
+                    <span class="text-[10px] font-medium text-slate-300 mt-2 block leading-tight max-w-[75px]">Salary Calc</span>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <!-- DYNAMIC INFRASTRUCTURE FOR LOADING TOOLS IN THE SAME PAGE -->
-    <div id="toolScreen" class="hidden min-h-screen flex flex-col bg-[#131e31]">
-        <header class="border-b border-slate-800 bg-[#1c293e] px-4 py-4 flex items-center gap-4 shadow-md">
-            <button onclick="backToHome()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg text-xs font-medium transition">← Back</button>
-            <h2 id="currentToolTitle" class="text-sm font-bold text-blue-400">Tool Name</h2>
-        </header>
-        <div class="flex-1 max-w-md w-full mx-auto px-4 py-6" id="toolViewBody">
-            <!-- Tool Workspace -->
+    <!-- 🛠️ مساحة عرض الأداة الديناميكية (تظهر في نفس الصفحة وتختفي القائمة تماماً مثل صفحة الراوتر) -->
+    <div id="toolWorkspace" class="hidden max-w-xl mx-auto px-4 mt-6 flex flex-col space-y-4">
+        <div class="flex items-center gap-3">
+            <button onclick="exitToDashboard()" class="bg-[#111a36] hover:bg-[#1c2541] border border-slate-800 text-xs font-medium px-4 py-2 rounded-xl transition shadow-md">← Back</button>
+            <h2 id="activeToolTitle" class="text-sm font-bold text-blue-400">Tool Title</h2>
+        </div>
+        <div id="dynamicToolCore" class="w-full">
+            <!-- سيتم حقن كود الأداة التفاعلي هنا بالكامل وبنفس اللون -->
         </div>
     </div>
 
     <script>
-        const home = document.getElementById('homeScreen');
-        const toolScreen = document.getElementById('toolScreen');
-        const toolTitle = document.getElementById('currentToolTitle');
-        const toolBody = document.getElementById('toolViewBody');
+        const dashboard = document.getElementById('mainDashboard');
+        const workspace = document.getElementById('toolWorkspace');
+        const toolTitle = document.getElementById('activeToolTitle');
+        const toolCore = document.getElementById('dynamicToolCore');
 
-        function showTool(id, name) {
-            home.classList.replace('block', 'hidden');
-            toolScreen.classList.replace('hidden', 'flex');
+        function switchPage(id, name) {
+            // إخفاء القائمة الرئيسية وإظهار واجهة الأداة في نفس الصفحة فوراً
+            dashboard.classList.replace('block', 'hidden');
+            workspace.classList.replace('hidden', 'flex');
             toolTitle.innerText = name;
 
+            // تشغيل الأكواد البرمجية للأدوات بشكل فوري ونظيف ومحلي
             if (id === 'qr-generator') {
-                toolBody.innerHTML = `
-                    <div class="bg-[#1c293e] border border-slate-800 p-5 rounded-2xl space-y-4 shadow-xl">
-                        <label class="block text-xs font-medium text-slate-400">Target Content</label>
-                        <input type="text" id="qrText" placeholder="Paste URL or text here..." class="w-full bg-[#131e31] border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500 transition">
-                        <button onclick="fireQR()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs py-2.5 rounded-xl transition shadow-md shadow-blue-600/10">Generate Code</button>
-                        <div id="outputContainer" class="flex justify-center p-3 bg-white rounded-xl hidden max-w-[160px] mx-auto mt-4"></div>
+                toolCore.innerHTML = `
+                    <div class="hub-container border p-5 rounded-2xl space-y-4 shadow-xl">
+                        <label class="block text-xs font-medium text-slate-400">Enter URL or text</label>
+                        <input type="text" id="targetText" placeholder="https://example.com" class="w-full bg-[#0b132b] border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500 transition">
+                        <button onclick="createQR()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs py-2.5 rounded-xl transition shadow-md">Generate QR Code</button>
+                        <div id="qrResultBox" class="flex justify-center p-3 bg-white rounded-xl hidden max-w-[150px] mx-auto mt-4 shadow-2xl"></div>
                     </div>`;
             } else {
-                toolBody.innerHTML = `
-                    <div class="text-center py-12 bg-[#1c293e] border border-slate-800 rounded-2xl shadow-xl">
-                        <p class="text-xs text-slate-400">Core code for this tool will be injected next.</p>
+                toolCore.innerHTML = `
+                    <div class="text-center py-12 hub-container border rounded-2xl shadow-xl">
+                        <p class="text-xs text-slate-400">Core framework is running. Ready to receive this tool's internal buttons next!</p>
                     </div>`;
             }
         }
 
-        function backToHome() {
-            toolScreen.classList.replace('flex', 'hidden');
-            home.classList.replace('hidden', 'block');
-            toolBody.innerHTML = "";
+        function exitToDashboard() {
+            workspace.classList.replace('flex', 'hidden');
+            dashboard.classList.replace('hidden', 'block');
+            toolCore.innerHTML = "";
         }
 
-        function fireQR() {
-            const val = document.getElementById('qrText').value;
-            const container = document.getElementById('outputContainer');
-            if(!val) return alert("Please type a valid link first!");
+        function createQR() {
+            const str = document.getElementById('targetText').value;
+            const box = document.getElementById('qrResultBox');
+            if(!str) return alert("Please input text first!");
             
-            container.innerHTML = "";
-            container.classList.remove('hidden');
+            box.innerHTML = "";
+            box.classList.remove('hidden');
             
-            new QRCode(container, {
-                text: val,
-                width: 140,
-                height: 140,
-                colorDark : "#131e31",
+            new QRCode(box, {
+                text: str,
+                width: 130,
+                height: 130,
+                colorDark : "#0b132b",
                 colorLight : "#ffffff"
             });
         }
