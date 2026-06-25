@@ -1,254 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Easifay Tools - Ultra Creative Web Studio</title>
+    <title>Easifay Tools</title>
+    <!-- استدعاء مكتبة Tailwind CSS للتصميم الاحترافي -->
+    <script src="https://jsdelivr.net"></script>
     <style>
-        :root {
-            --primary: #38bdf8;
-            --background: #0b1329;
-            --surface: #1c2541;
-            --surface-hover: #222e50;
-            --text: #f8fafc;
-            --muted: #94a3b8;
-            --success: #10b981;
-            --danger: #ef4444;
+        body {
+            background-color: #0f172a; /* اللون الأزرق الداكن الفاخر المماثل لملف موقعك */
         }
-        body, html {
-            background-color: var(--background);
-            color: var(--text);
-            margin: 0; padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-image: radial-gradient(circle at 50% 0%, #1e3a8a 0%, var(--background) 70%);
-            background-attachment: fixed;
-            scroll-behavior: smooth;
-        }
-        header { padding: 30px 20px 15px 20px; text-align: center; }
-        header h1 { margin: 0; color: var(--text); font-size: 32px; font-weight: 800; }
-        header h1 span { color: var(--primary); }
-        header p { margin: 8px 0 0 0; color: var(--muted); font-size: 14px; }
-        .container { max-width: 1000px; margin: 0 auto 60px auto; padding: 0 20px; box-sizing: border-box; }
-        .ad-banner {
-            background: rgba(28, 37, 65, 0.4); text-align: center; padding: 18px; margin-bottom: 25px;
-            border-radius: 14px; color: var(--primary); font-weight: 600;
-            border: 1px dashed rgba(56, 189, 248, 0.4); backdrop-filter: blur(10px); font-size: 14px;
-        }
-        .category-title { font-size: 14px; margin-top: 25px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; }
-        
-        /* شبكة أيقونات Canva الصغيرة والمدمجة */
-        .icon-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 12px; margin-top: 12px; }
-        .icon-card {
-            background-color: var(--surface); padding: 12px 8px; border-radius: 12px; text-align: center;
-            cursor: pointer; border: 1px solid rgba(255,255,255,0.03); transition: all 0.2s ease;
-        }
-        .icon-card:hover, .icon-card.active-card {
-            transform: translateY(-3px); background-color: var(--surface-hover); border-color: var(--primary); box-shadow: 0 8px 20px rgba(56, 189, 248, 0.2);
-        }
-        .icon-card .icon { font-size: 24px; margin-bottom: 6px; display: block; }
-        .icon-card h4 { margin: 0 0 2px 0; font-size: 12px; font-weight: 600; }
-        .icon-card p { margin: 0; color: var(--muted); font-size: 9px; }
-        
-        .tool-panel { background: var(--surface); padding: 25px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); margin-top: 35px; display: none; }
-        .tool-panel h3 { margin: 0 0 15px 0; color: var(--primary); font-size: 18px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
-        input, button, select, textarea { width: 100%; padding: 12px; margin-top: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(11, 19, 41, 0.5); color: white; box-sizing: border-box; font-size: 14px; }
-        button { background-color: var(--primary); color: #0b1329; font-weight: 700; border: none; cursor: pointer; font-size: 15px; }
-        button:hover { background-color: #7dd3fc; }
-        canvas { max-width: 100%; margin-top: 15px; border-radius: 10px; display: none; }
-        textarea { height: 110px; resize: none; color: #38bdf8; font-weight: 600; background: #0f172a; }
-        .qr-output { text-align: center; margin-top: 15px; display: none; background: white; padding: 15px; border-radius: 10px; width: fit-content; margin-inline: auto; }
     </style>
 </head>
-<body>
-<header>
-    <h1>Easifay <span>Tools Studio</span></h1>
-    <p>⚡ The ultimate all-in-one catalog of 10 premium utility tools for creators and developers.</p>
-</header>
-<div class="container">
-    <div class="ad-banner">🌐 Advertisement Area (Your Ad Code Will Go Here)</div>
-    
-    <div class="category-title">🎙️ Audio & Speech Hub</div>
-    <div class="icon-grid">
-        <div id="btn-speech" class="icon-card" onclick="switchTool('speech')"><span class="icon">🎙️</span><h4>Speech to Text</h4><p>Voice dictation</p></div>
-        <div id="btn-tts" class="icon-card" onclick="switchTool('tts')"><span class="icon">🔊</span><h4>Text to Speech</h4><p>Voice reader</p></div>
-    </div>
+<body class="text-slate-200 font-sans antialiased min-h-screen pb-12">
 
-    <div class="category-title">🎨 Graphic & Imaging Hub</div>
-    <div class="icon-grid">
-        <div id="btn-pixel" class="icon-card" onclick="switchTool('pixel')"><span class="icon">👾</span><h4>Pixel Art</h4><p>8-bit gaming art</p></div>
-        <div id="btn-compress" class="icon-card" onclick="switchTool('compress')"><span class="icon">📦</span><h4>Compressor</h4><p>Optimize size</p></div>
-        <div id="btn-convert" class="icon-card" onclick="switchTool('convert')"><span class="icon">🔄</span><h4>Format Converter</h4><p>PNG/JPG/WebP</p></div>
-    </div>
+    <!-- شريط العنوان العلوي بالاسم الجديد المحدث -->
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
+        <h1 class="text-xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Easifay Tools</h1>
+        <span class="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-1 rounded-full font-mono">v2.0</span>
+    </header>
 
-    <div class="category-title">⚙️ Digital Utilities & Math</div>
-    <div class="icon-grid">
-        <div id="btn-qr" class="icon-card" onclick="switchTool('qr')"><span class="icon">🔗</span><h4>QR Generator</h4><p>Create QR codes</p></div>
-        <div id="btn-pass" class="icon-card" onclick="switchTool('pass')"><span class="icon">🔑</span><h4>Password Maker</h4><p>Secure passwords</p></div>
-        <div id="btn-age" class="icon-card" onclick="switchTool('age')"><span class="icon">📅</span><h4>Age Calculator</h4><p>Find exact age</p></div>
-        <div id="btn-words" class="icon-card" onclick="switchTool('words')"><span class="icon">📝</span><h4>Word Counter</h4><p>Analyze text</p></div>
-        <div id="btn-bmi" class="icon-card" onclick="switchTool('bmi')"><span class="icon">⚖️</span><h4>BMI Fitness</h4><p>Check ideal weight</p></div>
-    </div>
+    <main class="max-w-6xl mx-auto px-4 mt-8 space-y-12">
 
-    <!-- لوحات عمل الأدوات الـ 10 الجاهزة للفتح والتشغيل التلقائي -->
-    <div id="panel-speech" class="tool-panel">
-        <h3>🎙️ Speech to Text Converter</h3>
-        <select id="langSelect"><option value="ar-SY">العربية (سوريا)</option><option value="en-US">English (US)</option></select>
-        <textarea id="textOutput" placeholder="Speak clearly into your microphone..." readonly></textarea>
-        <div id="recStatus" style="color:#fbbf24; margin-top:8px; font-weight:600;">Status: Idle</div>
-        <button id="startBtn" onclick="startVoice()">Start Microphone 🎤</button>
-        <button id="stopBtn" style="background:var(--danger); color:white; display:none;" onclick="stopVoice()">Stop Microphone 🛑</button>
-        <button style="background:var(--success); color:white; margin-top:8px;" onclick="copyText('textOutput')">Copy Text 📋</button>
-    </div>
+        <!-- 1️⃣ قسم أدوات الصور (IMAGE TOOLS) -->
+        <section class="space-y-4">
+            <h2 class="text-sm font-semibold text-slate-400 tracking-wider uppercase flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-blue-500"></span> أدوات الصور (IMAGE TOOLS)
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <a href="upscaler.html" class="flex items-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/50 transition duration-200">
+                    <div class="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 shrink-0">✨</div>
+                    <div><h3 class="font-medium text-sm">تحسين جودة الصور وتكبيرها</h3><p class="text-xs text-slate-500 mt-0.5">AI Image Upscaler</p></div>
+                </a>
+                <a href="bg-remover.html" class="flex items-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/50 transition duration-200">
+                    <div class="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center text-indigo-400 shrink-0">✂️</div>
+                    <div><h3 class="font-medium text-sm">إزالة خلفية الصور</h3><p class="text-xs text-slate-500 mt-0.5">Background Remover</p></div>
+                </a>
+                <a href="ocr.html" class="flex items-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/50 transition duration-200">
+                    <div class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400 shrink-0">📝</div>
+                    <div><h3 class="font-medium text-sm">استخراج النصوص من الصور</h3><p class="text-xs text-slate-500 mt-0.5">OCR Text Extractor</p></div>
+                </a>
+                <a href="converter.html" class="flex items-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/50 transition duration-200">
+                    <div class="w-10 h-10 rounded-full bg-pink-500/10 flex items-center justify-center text-pink-400 shrink-0">🔄</div>
+                    <div><h3 class="font-medium text-sm">تحويل صيغ الصور</h3><p class="text-xs text-slate-500 mt-0.5">Format Converter</p></div>
+                </a>
+                <a href="compressor.html" class="flex items-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/50 transition duration-200">
+                    <div class="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-400 shrink-0">🗜️</div>
+                    <div><h3 class="font-medium text-sm">ضغط وتقليل حجم الصور</h3><p class="text-xs text-slate-500 mt-0.5">Image Compressor</p></div>
+                </a>
+                <a href="pixel-art.html" class="flex items-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/50 transition duration-200">
+                    <div class="w-10 h-10 rounded-full bg-teal-500/10 flex items-center justify-center text-teal-400 shrink-0">🎨</div>
+                    <div><h3 class="font-medium text-sm">رسم وتصاميم البيكسل آرت</h3><p class="text-xs text-slate-500 mt-0.5">Pixel Art Creator</p></div>
+                </a>
+            </div>
+        </section>
 
-    <div id="panel-tts" class="tool-panel">
-        <h3>🔊 Text to Speech Reader</h3>
-        <textarea id="ttsInput" placeholder="Type or paste any English text here to read aloud..."></textarea>
-        <button onclick="playTTS()">Speak Out Loud 📢</button>
-    </div>
+        <!-- 2️⃣ قسم أدوات الفيديو والصوت (VIDEO & AUDIO TOOLS) -->
+        <section class="space-y-4">
+            <h2 class="text-sm font-semibold text-slate-400 tracking-wider uppercase flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> أدوات الفيديو والصوت (VIDEO & AUDIO TOOLS)
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <a href="video-cutter.html" class="flex items-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 transition duration-200">
+                    <div class="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400 shrink-0">🎬</div>
+                    <div><h3 class="font-medium text-sm">ضغط وتقطيع الفيديو</h3><p class="text-xs text-slate-500 mt-0.5">Video Cutter</p></div>
+                </a>
+                <a href="video-filters.html" class="flex items-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 transition duration-200">
+                    <div class="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 shrink-0">🎥</div>
+                    <div><h3 class="font-medium text-sm">تأثيرات وعزل خلفية الفيديو</h3><p class="text-xs text-slate-500 mt-0.5">Video Filters</p></div>
+                </a>
+                <a href="vocal-remover.html" class="flex items-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 transition duration-200">
+                    <div class="w-10 h-10 rounded-full bg-lime-500/10 flex items-center justify-center text-lime-400 shrink-0">🎵</div>
+                    <div><h3 class="font-medium text-sm">فصل الموسيقى عن الصوت</h3><p class="text-xs text-slate-500 mt-0.5">Vocal Remover</p></div>
+                </a>
+            </div>
+        </section>
 
-    <div id="panel-pixel" class="tool-panel">
-        <h3>👾 Magic Pixel Art Maker</h3>
-        <input type="file" id="pixelUpload" accept="image/*">
-        <input type="range" id="pixelSize" min="4" max="24" value="8" style="background:transparent; padding:0;">
-        <canvas id="pixelCanvas"></canvas>
-        <button onclick="processPixelArt()">Generate Pixel Art ✨</button>
-        <a id="pixelDownload" style="display:none; text-align:center; text-decoration:none; background:var(--success); color:white; padding:12px; margin-top:10px; border-radius:8px; font-weight:700;">Download Image 📥</a>
-    </div>
+        <!-- 3️⃣ قسم أدوات النصوص والكتابة (TEXT & WRITING TOOLS) -->
+        <section class="space-y-4">
+            <h2 class="text-sm font-semibold text-slate-400 tracking-wider uppercase flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-amber-500"></span> أدوات النصوص والكتابة (TEXT & WRITING TOOLS)
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <a href="speech-to-text.html" class="flex items-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-amber-500/50 transition duration-200">
+                    <div class="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-400 shrink-0">🎙️</div>
+                    <div><h3 class="font-medium text-sm">تحويل الكلام إلى نص مكتوب</h3><p class="text-xs text-slate-500 mt-0.5">Speech to Text</p></div>
+                </a>
+                <a href="text-to-speech.html" class="flex items-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-amber-500/50 transition duration-200">
+                    <div class="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center text-orange-400 shrink-0">🔊</div>
+                    <div><h3 class="font-medium text-sm">تحويل النص إلى كلام مسموع</h3><p class="text-xs text-slate-500 mt-0.5">Text to Speech</p></div>
+                </a>
+                <a href="word-counter.html" class="flex items-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-amber-500/50 transition duration-200">
+                    <div class="w-10 h-10 rounded-full bg-yellow-500/10 flex items-center justify-center text-yellow-400 shrink-0">📊</div>
+                    <div><h3 class="font-medium text-sm">عداد الكلمات وتحليل النصوص</h3><p class="text-xs text-slate-500 mt-0.5">Word Counter</p></div>
+                </a>
+                <a href="text-cleaner.html" class="flex items-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-amber-500/50 transition duration-200">
+                    <div class="w-10 h-10 rounded-full bg-yellow-600/10 flex items-center justify-center text-yellow-500 shrink-0">🧹</div>
+                    <div><h3 class="font-medium text-sm">مزيل الفراغات وتنظيف النصوص</h3><p class="text-xs text-slate-500 mt-0.5">Text Cleaner</p></div>
+                </a>
+            </div>
+        </section>
 
-    <div id="panel-compress" class="tool-panel">
-        <h3>📦 Smart Image Compressor</h3>
-        <input type="file" id="compUpload" accept="image/*">
-        <input type="number" id="imgWidth" placeholder="Target Width (pixels) e.g. 800 (Optional)">
-        <canvas id="compCanvas"></canvas>
-        <button onclick="processCompression()">Optimize & Compress Image 📦</button>
-        <a id="compDownload" style="display:none; text-align:center; text-decoration:none; background:var(--success); color:white; padding:12px; margin-top:10px; border-radius:8px; font-weight:700;">Download Image 📥</a>
-    </div>
-
-    <div id="panel-convert" class="tool-panel">
-        <h3>🔄 Image Format Converter</h3>
-        <input type="file" id="convUpload" accept="image/*">
-        <select id="formatSelect"><option value="image/jpeg">Convert to JPG</option><option value="image/png">Convert to PNG</option><option value="image/webp">Convert to WebP</option></select>
-        <canvas id="convCanvas"></canvas>
-        <button onclick="processConversion()">Convert Format 🔄</button>
-        <a id="convDownload" style="display:none; text-align:center; text-decoration:none; background:var(--success); color:white; padding:12px; margin-top:10px; border-radius:8px; font-weight:700;">Download Converted File 📥</a>
-    </div>
-        <div id="panel-qr" class="tool-panel">
-        <h3>🔗 QR Code Generator</h3>
-        <input type="text" id="qrText" placeholder="Enter link or text to generate QR code...">
-        <div id="qrcode" class="qr-output"></div>
-        <button onclick="generateQRCode()">Generate QR Code 🔗</button>
-    </div>
-
-    <div id="panel-pass" class="tool-panel">
-        <h3>🔑 Secure Password Generator</h3>
-        <label style="font-size:12px; color:var(--muted);">Password Length:</label>
-        <input type="number" id="passLength" value="12" min="6" max="32">
-        <textarea id="passOutput" placeholder="Your strong password will appear here..." readonly style="height:60px;"></textarea>
-        <button onclick="makePassword()">Generate Password 🔑</button>
-        <button style="background:var(--success); color:white; margin-top:5px;" onclick="copyText('passOutput')">Copy Password 📋</button>
-    </div>
-
-    <div id="panel-age" class="tool-panel">
-        <h3>📅 Birthdate & Age Calculator</h3>
-        <input type="date" id="birthDate">
-        <div id="ageResult" style="margin-top:15px; font-weight:600; font-size:16px; color:var(--primary); text-align:center;"></div>
-        <button onclick="calculateAge()">Calculate Exact Age 📅</button>
-    </div>
-
-    <div id="panel-words" class="tool-panel">
-        <h3>📝 Advanced Word & Character Counter</h3>
-        <textarea id="wordInput" placeholder="Type or paste your text here..." oninput="countWords()"></textarea>
-        <div style="display:flex; gap:20px; margin-top:10px; font-weight:600; color:var(--primary); justify-content:center;">
-            <div>Words: <span id="wCount">0</span></div>
-            <div>Characters: <span id="cCount">0</span></div>
-        </div>
-    </div>
-
-    <div id="panel-bmi" class="tool-panel">
-        <h3>⚖️ BMI Body Fitness Calculator</h3>
-        <input type="number" id="bmiWeight" placeholder="Your weight in kilograms (e.g., 70)">
-        <input type="number" id="bmiHeight" placeholder="Your height in centimeters (e.g., 175)">
-        <div id="bmiResult" style="margin-top:15px; font-weight:600; text-align:center;"></div>
-        <button onclick="calculateBMI()">Analyze BMI ⚖️</button>
-    </div>
-</div>
-
-<script>
-    function switchTool(t) {
-        stopVoice();
-        document.querySelectorAll('.tool-panel').forEach(p => p.style.display = 'none');
-        document.querySelectorAll('.icon-card').forEach(c => c.classList.remove('active-card'));
-        document.getElementById('panel-' + t).style.display = 'block';
-        document.getElementById('btn-' + t).classList.add('active-card');
-    }
-
-    let recognition;
-    if ('webkitSpeechRecognition' in window || 'speechRecognition' in window) {
-        const SpeechRecognition = window.webkitSpeechRecognition || window.speechRecognition;
-        recognition = new SpeechRecognition(); recognition.continuous = true; recognition.interimResults = false;
-        recognition.onstart = () => { document.getElementById('recStatus').innerText = "Status: Listening... Speak!"; document.getElementById('startBtn').style.display = 'none'; document.getElementById('stopBtn').style.display = 'block'; };
-        recognition.onend = () => { if(document.getElementById('recStatus')) { document.getElementById('recStatus').innerText = "Status: Idle"; document.getElementById('startBtn').style.display = 'block'; document.getElementById('stopBtn').style.display = 'none'; } };
-        recognition.onresult = (e) => { let txt = e.results[e.results.length - 1].transcript; if(txt) document.getElementById('textOutput').value += txt + ' '; };
-    }
-    function startVoice() { if(!recognition) return alert('Use Chrome browser.'); recognition.lang = document.getElementById('langSelect').value; recognition.start(); }
-    function stopVoice() { if(recognition) { try { recognition.stop(); } catch(e){} } }
-    function copyText(id) { const tx = document.getElementById(id); tx.select(); document.execCommand('copy'); alert('Copied!'); }
-
-    function playTTS() {
-        const txt = document.getElementById('ttsInput').value; if(!txt) return alert('Type something first');
-        const u = new SpeechSynthesisUtterance(txt); u.lang = 'en-US'; window.speechSynthesis.speak(u);
-    }
-
-    let pImg = new Image(); document.getElementById('pixelUpload').onchange = (e) => { if(e.target.files.length === 0) return; let r = new FileReader(); r.onload = (ev) => pImg.src = ev.target.result; r.readAsDataURL(e.target.files); };
-    function makePixelArt() {
-        if(!pImg.src) return alert('Upload image'); const cv = document.getElementById('pixelCanvas'); const ctx = cv.getContext('2d'); const size = parseInt(document.getElementById('pixelSize').value);
-        let maxW = 500; let scale = pImg.width > maxW ? maxW / pImg.width : 1; cv.width = pImg.width * scale; cv.height = pImg.height * scale;
-        ctx.drawImage(pImg, 0, 0, cv.width, cv.height); const imgData = ctx.getImageData(0, 0, cv.width, cv.height); const data = imgData.data;
-        for (let y = 0; y < cv.height; y += size) { for (let x = 0; x < cv.width; x += size) { let idx = (y * cv.width + x) * 4; ctx.fillStyle = `rgb(${data[idx]},${data[idx+1]},${data[idx+2]})`; ctx.fillRect(x, y, size, size); } }
-        cv.style.display = 'block'; const dl = document.getElementById('pixelDownload'); dl.style.display = 'block'; dl.href = cv.toDataURL(); dl.download = "pixel_art.png";
-    }
-
-    let cImg = new Image(); document.getElementById('compUpload').onchange = (e) => { if(e.target.files.length === 0) return; let r = new FileReader(); r.onload = (ev) => cImg.src = ev.target.result; r.readAsDataURL(e.target.files); };
-    function compressImage() {
-        if(!cImg.src) return alert('Upload image'); const cv = document.getElementById('compCanvas'); const ctx = cv.getContext('2d'); const widthInput = document.getElementById('imgWidth').value; const targetWidth = widthInput ? parseInt(widthInput) : (cImg.width > 500 ? 500 : cImg.width); const scale = targetWidth / cImg.width; cv.width = targetWidth; cv.height = cImg.height * scale;
-        ctx.drawImage(cImg, 0, 0, cv.width, cv.height); cv.style.display = 'block'; const dl = document.getElementById('compDownload'); dl.style.display = 'block'; dl.href = cv.toDataURL('image/jpeg', 0.6); dl.download = "compressed.jpg";
-    }
-
-    let convImg = new Image(); document.getElementById('convUpload').onchange = (e) => { if(e.target.files.length === 0) return; let r = new FileReader(); r.onload = (ev) => convImg.src = ev.target.result; r.readAsDataURL(e.target.files); };
-    function processConversion() {
-        if(!convImg.src) return alert('Upload image'); const cv = document.getElementById('convCanvas'); const ctx = cv.getContext('2d'); const f = document.getElementById('formatSelect').value; cv.width = convImg.width; cv.height = convImg.height; ctx.drawImage(convImg, 0, 0);
-        cv.style.display = 'block'; const dl = document.getElementById('convDownload'); dl.style.display = 'block'; dl.href = cv.toDataURL(f); dl.download = f === 'image/png' ? "converted.png" : (f === 'image/webp' ? "converted.webp" : "converted.jpg");
-    }
-
-    function generateQRCode() {
-        const text = document.getElementById('qrText').value; if(!text) return alert('Enter text/link');
-        const box = document.getElementById('qrcode'); box.innerHTML = ""; box.style.display = "block";
-        const img = document.createElement('img'); img.src = "https://qrserver.com" + encodeURIComponent(text); box.appendChild(img);
-    }
-
-    function makePassword() {
-        const len = parseInt(document.getElementById('passLength').value); const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
-        let pass = ""; for(let i=0; i<len; i++) pass += chars.charAt(Math.floor(Math.random() * chars.length)); document.getElementById('passOutput').value = pass;
-    }
-
-    function calculateAge() {
-        const input = document.getElementById('birthDate').value; if(!input) return alert('Select date');
-        const b = new Date(input); const today = new Date(); let age = today.getFullYear() - b.getFullYear();
-        const m = today.getMonth() - b.getMonth(); if (m < 0 || (m === 0 && today.getDate() < b.getDate())) age--;
-        document.getElementById('ageResult').innerText = "Your Exact Age is: " + age + " Years Old";
-    }
-
-    function countWords() {
-        const txt = document.getElementById('wordInput').value; document.getElementById('cCount').innerText = txt.length;
-        const words = txt.trim().split(/\s+/); document.getElementById('wCount').innerText = txt.trim() === "" ? 0 : words.length;
-    }
-
-    function calculateBMI() {
-        const w = parseFloat(document.getElementById('bmiWeight').value); const h = parseFloat(document.getElementById('bmiHeight').value)/100;
-        if(!w || !h) return alert('Enter weight and height'); const bmi = (w / (h * h)).toFixed(1); let status = "";
-        if(bmi < 18.5) { status = "Underweight 🟡"; color = "#fbbf24"; } else if(bmi < 25) { status = "Normal Weight 🟢"; color = "#10b981"; } else { status = "Overweight 🔴"; color = "#ef4444"; }
-        document.getElementById('bmiResult').innerHTML = `<span style="color:${color}">Your BMI is ${bmi} (${status})</span>`;
-    }
-</script>
-</body>
-</html>
+        <!-- 4️⃣ قسم أدوات الذكاء الاصطناعي والملفات الرقمية (AI, DOCUMENTS & DIGITAL TOOLS) -->
+        <section class="space-y-4">
+            <h2 class="text-sm font-semibold text-slate-400 tracking-wider uppercase flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-rose-500"></span> أدوات الذكاء الاصطناعي والملفات الرقمية
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <a href="pdf-chat.html" class="flex items-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-rose-500/50 transition duration-200">
+                    <div class="w-10 h-10 rounded-full bg-rose-500/10 flex items-center justify-center text-rose-400 shrink-0">📕</div>
+                    <div><h3 class="font-medium text-sm">المساعد الذكي لتلخيص الـ PDF</h3><p class="text-xs text-slate-500 mt-0.5">Chat with PDF</p></div>
+                </a>
