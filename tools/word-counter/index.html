@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word & Character Counter</title>
+    <style>
+        body {
+            background-color: transparent;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            margin: 0;
+        }
+        .tool-wrapper { max-width: 800px; margin: 0 auto; }
+        textarea {
+            width: 100%; height: 200px; background-color: #111c35;
+            border: 1px solid #1e2d50; border-radius: 12px; color: #ffffff;
+            padding: 15px; font-size: 16px; resize: vertical; box-sizing: border-box; outline: none;
+        }
+        textarea:focus { border-color: #00d2ff; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 20px; }
+        @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+        .stat-card { background-color: #111c35; border: 1px solid #1e2d50; padding: 15px; border-radius: 10px; text-align: center; }
+        .stat-card h4 { margin: 0 0 5px 0; color: #8fa0dd; font-size: 12px; text-transform: uppercase; }
+        .stat-card p { margin: 0; font-size: 22px; font-weight: bold; color: #00d2ff; }
+    </style>
+</head>
+<body>
+<div class="tool-wrapper">
+    <textarea id="text-input" placeholder="Type or paste your text here... / اكتب أو الصق نصك هنا..."></textarea>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h4>Words / الكلمات</h4>
+            <p id="val-words">0</p>
+        </div>
+        <div class="stat-card">
+            <h4>Characters / الحروف</h4>
+            <p id="val-chars">0</p>
+        </div>
+        <div class="stat-card">
+            <h4>Paragraphs / الفقرات</h4>
+            <p id="val-paragraphs">0</p>
+        </div>
+        <div class="stat-card">
+            <h4>Reading Time / وقت القراءة</h4>
+            <p id="val-reading">0m</p>
+        </div>
+    </div>
+</div>
+<script>
+    const textInput = document.getElementById('text-input');
+    const valWords = document.getElementById('val-words');
+    const valChars = document.getElementById('val-chars');
+    const valParagraphs = document.getElementById('val-paragraphs');
+    const valReading = document.getElementById('val-reading');
+
+    textInput.addEventListener('input', () => {
+        const text = textInput.value;
+        valChars.innerText = text.length;
+        const words = text.trim().split(/\s+/).filter(item => item);
+        valWords.innerText = words.length;
+        const paragraphs = text.split('\n').filter(item => item.trim());
+        valParagraphs.innerText = paragraphs.length;
+        const readingTime = Math.ceil(words.length / 200);
+        valReading.innerText = words.length > 0 ? readingTime + 'm' : '0m';
+    });
+</script>
+</body>
+</html>
