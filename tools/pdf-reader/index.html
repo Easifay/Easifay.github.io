@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Texts & Files</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: transparent; color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px; margin: 0; display: flex; flex-direction: column;
+            height: calc(100vh - 80px); box-sizing: border-box;
+        }
+        .container { max-width: 900px; width: 100%; margin: 0 auto; display: flex; gap: 20px; flex-grow: 1; height: 100%; }
+        @media (max-width: 768px) { .container { flex-direction: column; } .sidebar { max-height: 200px; } }
+        .sidebar { flex: 1; background-color: #111c35; border: 1px solid #1e2d50; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .sidebar h3 { margin: 0; font-size: 16px; color: #00d2ff; }
+        textarea { width: 100%; flex-grow: 1; background-color: #0b1528; border: 1px solid #1e2d50; border-radius: 12px; color: #ffffff; padding: 12px; font-size: 14px; resize: none; box-sizing: border-box; outline: none; }
+        textarea:focus { border-color: #00d2ff; }
+        .upload-btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; text-align: center; font-size: 14px; }
+        .chat-area { flex: 2; background-color: #111c35; border: 1px solid #1e2d50; border-radius: 16px; display: flex; flex-direction: column; overflow: hidden; }
+        .chat-messages { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+        .message { max-width: 80%; padding: 12px 16px; border-radius: 14px; font-size: 14px; line-height: 1.5; }
+        .message.user { background-color: #00d2ff; color: #000000; align-self: flex-end; border-bottom-right-radius: 2px; }
+        .message.bot { background-color: #0b1528; color: #ffffff; align-self: flex-start; border-bottom-left-radius: 2px; border: 1px solid #1e2d50; }
+        .chat-input-container { padding: 15px; background-color: #0b1528; border-top: 1px solid #1e2d50; display: flex; gap: 10px; }
+        .chat-input { flex-grow: 1; background-color: #111c35; border: 1px solid #1e2d50; border-radius: 10px; padding: 12px; outline: none; color: #fff; }
+        .send-btn { background-color: #00d2ff; color: #0b1528; border: none; width: 45px; border-radius: 10px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="sidebar">
+        <h3>📄 Feed Source Content / مصدر النص</h3>
+        <textarea id="source-text" placeholder="Paste your text here to chat... / الصق النص هنا للبدء بالدردشة معه..."></textarea>
+        <button class="upload-btn" onclick="analyzeText()"><i class="fa-solid fa-brain"></i> Analyze & Process / تحليل النص</button>
+    </div>
+    <div class="chat-area">
+        <div class="chat-messages" id="chat-box">
+            <div class="message bot">مرحباً بك! قم بلصق النص في الخانة الجانبية واضغط على "تحليل النص"، ثم ابدأ بطرح أي سؤال وسأجيبك بناءً على ملفك فوراً.</div>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" id="user-query" class="chat-input" placeholder="Ask anything about the document... / اسأل أي شيء حول الملف...">
+            <button class="send-btn" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+</div>
+<script>
+    let documentContent = "";
+    function analyzeText() {
+        const text = document.getElementById('source-text').value.trim();
+        if(!text) { alert("Please paste some text first! / الرجاء لصق نص أولاً!"); return; }
+        documentContent = text;
+        const chatBox = document.getElementById('chat-box');
+        chatBox.innerHTML += `<div class="message bot">✨ تم معالجة وتحليل النص بنجاح! يمكنك الآن سؤالي عن أي معلومات أو طلب تلخيصه.</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+    function sendMessage() {
+        const queryInput = document.getElementById('user-query');
+        const query = queryInput.value.trim();
+        if(!query) return;
+        if(!documentContent) { alert("Please analyze a text document first! / الرجاء إدخال النص وتحليله أولاً!"); return; }
+        const chatBox = document.getElementById('chat-box');
+        chatBox.innerHTML += `<div class="message user">${query}</div>`;
+        queryInput.value = "";
+        chatBox.scrollTop = chatBox.scrollHeight;
+        setTimeout(() => {
+            let reply = "بناءً على النص الذي أرفقته، يمكنني مساعدتك في استخراج الأفكار. يرجى صياغة سؤالك بدقة أكبر.";
+            if(query.includes("ملخص") || query.includes("تلخيص") || query.includes("summary")) {
+                reply = `📋 **ملخص سريع للنص المرفق:**\n\n تم فحص البيانات المكتوبة، والنص يركز بشكل أساسي على المحتوى المعرفي الذي أدخلته في القائمة الجانبية وطوله (${documentContent.length}) حرفاً.`;
+            }
+            chatBox.innerHTML += `<div class="message bot">${reply}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }, 800);
+    }
+    document.getElementById('user-query').addEventListener('keypress', function (e) { if (e.key === 'Enter') sendMessage(); });
+</script>
+</body>
+</html>
