@@ -9,12 +9,15 @@
         :root {
             --bg-main: #0b1528;
             --bg-card: #111c35;
-            --bg-icon-photo: #e67e22;
-            --bg-icon-video: #9b59b6;
-            --bg-icon-other: #1abc9c;
             --text-color: #ffffff;
             --text-muted: #8fa0dd;
             --accent-blue: #00d2ff;
+            
+            /* تدرجات ألوان الأيقونات الجديدة */
+            --grad-photo: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            --grad-video: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            --grad-other: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --grad-dev: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
         }
 
         * {
@@ -22,7 +25,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: background 0.3s ease;
+            transition: transform 0.2s ease, background 0.3s ease;
         }
 
         body, html {
@@ -33,7 +36,7 @@
         }
 
         .container {
-            max-width: 850px;
+            max-width: 1100px; /* قمنا بتوسيع الحاوية لتناسب التوزيع العرضي */
             margin: 0 auto;
             padding: 20px;
         }
@@ -62,10 +65,10 @@
             border-color: var(--accent-blue);
         }
 
-        header { text-align: center; padding: 25px 10px; }
-        header h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+        header { text-align: center; padding: 30px 10px; }
+        header h1 { font-size: 36px; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.5px; }
         header h1 span { color: var(--accent-blue); }
-        header p { color: var(--text-muted); font-size: 13px; }
+        header p { color: var(--text-muted); font-size: 14px; }
 
         .ad-area {
             background: rgba(0, 210, 255, 0.05);
@@ -73,71 +76,81 @@
             border-radius: 12px;
             padding: 15px;
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             font-size: 12px;
             color: var(--text-muted);
         }
 
         .section-box {
             background-color: var(--bg-card);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 25px;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
             border: 1px solid #1e2d50;
         }
 
         .section-title {
-            font-size: 14px;
+            font-size: 16px;
             color: var(--accent-blue);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             text-transform: uppercase;
+            font-weight: 600;
         }
 
-        .tools-grid { display: flex; flex-direction: column; gap: 12px; }
+        /* تحويل توزيع الأدوات إلى شبكة بجانب بعضها البعض */
+        .tools-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); 
+            gap: 16px; 
+        }
 
         .tool-item {
             display: flex;
+            flex-direction: column; /* جعل المحتوى عمودي داخل الكرت لتوفير المساحة */
             align-items: center;
+            text-align: center;
             background: rgba(255, 255, 255, 0.02);
-            padding: 12px 16px;
-            border-radius: 12px;
+            padding: 20px 15px;
+            border-radius: 16px;
             cursor: pointer;
-            border: 1px solid transparent;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            position: relative;
         }
 
         .tool-item:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(0, 210, 255, 0.2);
-            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(0, 210, 255, 0.25);
+            transform: translateY(-3px);
         }
 
+        /* تصميم الأيقونات الملونة والمتدرجة الجديد */
         .icon-circle {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            border-radius: 14px; /* زوايا ناعمة تعطي طابع تطبيقي بدلاً من الدائرة التقليدية */
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
-            flex-shrink: 0;
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        html[dir="ltr"] .icon-circle { margin-right: 15px; }
-        html[dir="rtl"] .icon-circle { margin-left: 15px; }
+        /* تطبيق التدرجات اللونية للأيقونات */
+        .photo-route .icon-circle { background: var(--grad-photo); color: #2c3e50; }
+        .video-route .icon-circle { background: var(--grad-video); color: #2c3e50; }
+        .other-route .icon-circle { background: var(--grad-other); }
+        .dev-route .icon-circle { background: var(--grad-dev); color: #2c3e50; }
 
-        .photo-route .icon-circle { background-color: var(--bg-icon-photo); }
-        .video-route .icon-circle { background-color: var(--bg-icon-video); }
-        .other-route .icon-circle { background-color: var(--bg-icon-other); }
-
-        .tool-info h3 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
-        .tool-info p { font-size: 11px; color: var(--text-muted); }
+        .tool-info h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; line-height: 1.3; }
+        .tool-info p { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
         
-        html[dir="ltr"] .arrow-icon { margin-left: auto; transform: rotate(180deg); }
-        html[dir="rtl"] .arrow-icon { margin-right: auto; }
-        .arrow-icon { color: var(--text-muted); font-size: 12px; }
+        /* إخفاء سهم التنقل الجانبي لأنه لم يعد مناسباً للتوزيع الشبكي الجديد */
+        .arrow-icon { display: none; }
 
         #tool-view-container {
             display: none;
@@ -172,7 +185,7 @@
         html[dir="ltr"] .back-btn i { transform: rotate(180deg); }
 
         iframe { width: 100%; height: 100%; border: none; background-color: transparent; }
-        footer { text-align: center; font-size: 11px; color: var(--text-muted); padding: 20px 0; }
+        footer { text-align: center; font-size: 11px; color: var(--text-muted); padding: 30px 0; }
     </style>
 </head>
 <body>
@@ -195,120 +208,119 @@
         <i class="fa-solid fa-rectangle-ad"></i> Advertisement Area (Your Ad Code Will Go Here)
     </div>
 
+    <!-- ================= 1. GRAPHIC & IMAGING HUB ================= -->
     <div class="section-box">
         <div class="section-title" id="title-photo"><i class="fa-solid fa-image"></i> Graphic & Imaging Hub</div>
         <div class="tools-grid">
             <div onclick="openTool('tools/bg-remover/index.html', 't1')" class="tool-item photo-route">
                 <div class="icon-circle"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-                <div class="tool-info"><h3 id="t1-h"></h3><p id="t1-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t1-h"></h3><p id="t1-p"></p></div>
             </div>
             <div onclick="openTool('tools/image-enhancer/index.html', 't2')" class="tool-item photo-route">
                 <div class="icon-circle"><i class="fa-solid fa-up-long"></i></div>
-                <div class="tool-info"><h3 id="t2-h"></h3><p id="t2-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t2-h"></h3><p id="t2-p"></p></div>
             </div>
             <div onclick="openTool('tools/ocr-image/index.html', 't3')" class="tool-item photo-route">
                 <div class="icon-circle"><i class="fa-solid fa-file-font"></i></div>
-                <div class="tool-info"><h3 id="t3-h"></h3><p id="t3-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t3-h"></h3><p id="t3-p"></p></div>
             </div>
             <div onclick="openTool('tools/image-modifier/index.html', 't4')" class="tool-item photo-route">
                 <div class="icon-circle"><i class="fa-solid fa-crop-simple"></i></div>
-                <div class="tool-info"><h3 id="t4-h"></h3><p id="t4-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t4-h"></h3><p id="t4-p"></p></div>
             </div>
             <div onclick="openTool('tools/image-to-webp/index.html', 't14')" class="tool-item photo-route">
                 <div class="icon-circle"><i class="fa-solid fa-file-image"></i></div>
-                <div class="tool-info"><h3 id="t14-h"></h3><p id="t14-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t14-h"></h3><p id="t14-p"></p></div>
             </div>
             <div onclick="openTool('tools/meme-generator/index.html', 't15')" class="tool-item photo-route">
                 <div class="icon-circle"><i class="fa-regular fa-face-laugh-squint"></i></div>
-                <div class="tool-info"><h3 id="t15-h"></h3><p id="t15-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t15-h"></h3><p id="t15-p"></p></div>
             </div>
             <div onclick="openTool('tools/yt-thumbnail/index.html', 't16')" class="tool-item photo-route">
                 <div class="icon-circle"><i class="fa-brands fa-youtube"></i></div>
-                <div class="tool-info"><h3 id="t16-h"></h3><p id="t16-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t16-h"></h3><p id="t16-p"></p></div>
             </div>
         </div>
     </div>
 
+    <!-- ================= 2. VIDEO & AUDIO HUB ================= -->
     <div class="section-box">
         <div class="section-title" id="title-video"><i class="fa-solid fa-video"></i> Video & Audio Production Hub</div>
         <div class="tools-grid">
             <div onclick="openTool('tools/video-compressor/index.html', 't8')" class="tool-item video-route">
                 <div class="icon-circle"><i class="fa-solid fa-compress"></i></div>
-                <div class="tool-info"><h3 id="t8-h"></h3><p id="t8-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t8-h"></h3><p id="t8-p"></p></div>
             </div>
             <div onclick="openTool('tools/audio-separator/index.html', 't12')" class="tool-item video-route">
                 <div class="icon-circle"><i class="fa-solid fa-music"></i></div>
-                <div class="tool-info"><h3 id="t12-h"></h3><p id="t12-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t12-h"></h3><p id="t12-p"></p></div>
             </div>
             <div onclick="openTool('tools/video-effects/index.html', 't13')" class="tool-item video-route">
                 <div class="icon-circle"><i class="fa-solid fa-film"></i></div>
-                <div class="tool-info"><h3 id="t13-h"></h3><p id="t13-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t13-h"></h3><p id="t13-p"></p></div>
             </div>
             <div onclick="openTool('tools/text-to-speech/index.html', 't6')" class="tool-item video-route">
                 <div class="icon-circle"><i class="fa-solid fa-volume-high"></i></div>
-                <div class="tool-info"><h3 id="t6-h"></h3><p id="t6-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t6-h"></h3><p id="t6-p"></p></div>
             </div>
             <div onclick="openTool('tools/screen-recorder/index.html', 't17')" class="tool-item video-route">
                 <div class="icon-circle"><i class="fa-solid fa-desktop"></i></div>
-                <div class="tool-info"><h3 id="t17-h"></h3><p id="t17-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t17-h"></h3><p id="t17-p"></p></div>
             </div>
             <div onclick="openTool('tools/audio-converter/index.html', 't18')" class="tool-item video-route">
                 <div class="icon-circle"><i class="fa-solid fa-sliders"></i></div>
-                <div class="tool-info"><h3 id="t18-h"></h3><p id="t18-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t18-h"></h3><p id="t18-p"></p></div>
             </div>
         </div>
     </div>
 
+    <!-- ================= 3. DEVELOPERS, CALCULATORS & AI HUB ================= -->
     <div class="section-box">
         <div class="section-title" id="title-other"><i class="fa-solid fa-code"></i> Developers, Calculators & AI Hub</div>
         <div class="tools-grid">
-            <div onclick="openTool('tools/dev-tools/index.html', 't3_dev')" class="tool-item other-route">
+            <div onclick="openTool('tools/dev-tools/index.html', 't3_dev')" class="tool-item dev-route">
                 <div class="icon-circle"><i class="fa-solid fa-laptop-code"></i></div>
-                <div class="tool-info"><h3 id="t3_dev-h"></h3><p id="t3_dev-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t3_dev-h"></h3><p id="t3_dev-p"></p></div>
             </div>
-            <div onclick="openTool('tools/calculator/index.html', 't2_cal')" class="tool-item other-route">
+            <div onclick="openTool('tools/calculator/index.html', 't2_cal')" class="tool-item dev-route">
                 <div class="icon-circle"><i class="fa-solid fa-calculator"></i></div>
-                <div class="tool-info"><h3 id="t2_cal-h"></h3><p id="t2_cal-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t2_cal-h"></h3><p id="t2_cal-p"></p></div>
             </div>
             <div onclick="openTool('tools/speech-to-text/index.html', 't5')" class="tool-item other-route">
                 <div class="icon-circle"><i class="fa-solid fa-microphone"></i></div>
-                <div class="tool-info"><h3 id="t5-h"></h3><p id="t5-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
-            </div>
-            <div onclick="openTool('tools/ai-detector/index.html', 't7')" class="tool-item other-route">
-                <div class="icon-circle"><i class="fa-solid fa-robot"></i></div>
-                <div class="tool-info"><h3 id="t7-h"></h3><p id="t7-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t5-h"></h3><p id="t5-p"></p></div>
             </div>
             <div onclick="openTool('tools/pdf-reader/index.html', 't11')" class="tool-item other-route">
-                <div class="icon-circle"><i class="fa-solid fa-file-pdf"></i></div>
-                <div class="tool-info"><h3 id="t11-h"></h3><p id="t11-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="icon-circle"><i class="fa-solid fa-comments"></i></div>
+                <div class="tool-info"><h3 id="t11-h"></h3><p id="t11-p"></p></div>
             </div>
-            <div onclick="openTool('tools/password-gen/index.html', 't19')" class="tool-item other-route">
+            <div onclick="openTool('tools/password-gen/index.html', 't19')" class="tool-item dev-route">
                 <div class="icon-circle"><i class="fa-solid fa-key"></i></div>
-                <div class="tool-info"><h3 id="t19-h"></h3><p id="t19-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t19-h"></h3><p id="t19-p"></p></div>
             </div>
-            <div onclick="openTool('tools/qr-generator/index.html', 't20')" class="tool-item other-route">
+            <div onclick="openTool('tools/qr-generator/index.html', 't20')" class="tool-item dev-route">
                 <div class="icon-circle"><i class="fa-solid fa-qrcode"></i></div>
-                <div class="tool-info"><h3 id="t20-h"></h3><p id="t20-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t20-h"></h3><p id="t20-p"></p></div>
             </div>
-            <div onclick="openTool('tools/code-beautifier/index.html', 't21')" class="tool-item other-route">
+            <div onclick="openTool('tools/code-beautifier/index.html', 't21')" class="tool-item dev-route">
                 <div class="icon-circle"><i class="fa-solid fa-terminal"></i></div>
-                <div class="tool-info"><h3 id="t21-h"></h3><p id="t21-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t21-h"></h3><p id="t21-p"></p></div>
             </div>
-            <div onclick="openTool('tools/markdown-editor/index.html', 't22')" class="tool-item other-route">
+            <div onclick="openTool('tools/markdown-editor/index.html', 't22')" class="tool-item dev-route">
                 <div class="icon-circle"><i class="fa-brands fa-markdown"></i></div>
-                <div class="tool-info"><h3 id="t22-h"></h3><p id="t22-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t22-h"></h3><p id="t22-p"></p></div>
             </div>
             <div onclick="openTool('tools/age-calculator/index.html', 't23')" class="tool-item other-route">
                 <div class="icon-circle"><i class="fa-solid fa-calendar-days"></i></div>
-                <div class="tool-info"><h3 id="t23-h"></h3><p id="t23-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t23-h"></h3><p id="t23-p"></p></div>
             </div>
             <div onclick="openTool('tools/bmi-calculator/index.html', 't24')" class="tool-item other-route">
                 <div class="icon-circle"><i class="fa-solid fa-heart-pulse"></i></div>
-                <div class="tool-info"><h3 id="t24-h"></h3><p id="t24-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t24-h"></h3><p id="t24-p"></p></div>
             </div>
             <div onclick="openTool('tools/word-counter/index.html', 't25')" class="tool-item other-route">
                 <div class="icon-circle"><i class="fa-solid fa-arrow-1-9"></i></div>
-                <div class="tool-info"><h3 id="t25-h"></h3><p id="t25-p"></p></div><i class="fa-solid fa-chevron-left arrow-icon"></i>
+                <div class="tool-info"><h3 id="t25-h"></h3><p id="t25-p"></p></div>
             </div>
         </div>
     </div>
@@ -345,8 +357,7 @@
             t3_devh: "Developer Hub Tools", t3_devp: "Essential engineering helpers and content utility suites.",
             t2_calh: "Advanced Core Calculator", t2_calp: "Execute quick mathematical equations and logic variables.",
             t5h: "Speech to Text (Voice Dictation)", t5p: "Transcribe spoken words into structured digital text documents.",
-            t7h: "AI Text Detector & Scanner", t7p: "Scan essays or posts to identify synthetic AI text patterns.",
-            t11h: "AI PDF Summarizer & Copilot", t11p: "Upload massive PDF files to parse, query, and structure data.",
+            t11h: "Chat with Texts & Files", t11p: "Upload files or paste text blocks to instantly summarize, interact, and query.",
             t19h: "Secure Password Generator", t19p: "Generate ultra-secure uncrackable random keys instantly.",
             t20h: "QR Code Generator & Scanner", t20p: "Generate customized QR matrices or scan them instantly via camera.",
             t21h: "HTML/CSS/JS Beautifier", t21p: "Clean, format, and un-minify messed up programming code.",
@@ -374,8 +385,7 @@
             t3_devh: "أدوات المطورين", t3_devp: "مجموعة المساعدات الهندسية والأدوات البرمجية الحيوية.",
             t2_calh: "أداة الحسابات المتقدمة", t2_calp: "إجراء العمليات الحسابية والمعادلات الرياضية السريعة.",
             t5h: "تحويل الكلام إلى نص مكتوب", t5p: "إملاء صوتي دقيق لتحويل وتفريغ المحادثات لنصوص.",
-            t7h: "كشف نصوص الذكاء الاصطناعي", t7p: "فحص المقالات والتأكد إن كانت مكتوبة بواسطة نماذج الـ AI.",
-            t11h: "المساعد الذكي لتلخيص الـ PDF", t11p: "رفع ملفات الـ PDF وتلخيصها ومناقشتها واستخراج البيانات ذكياً.",
+            t11h: "الدردشة مع النصوص والملفات", t11p: "ارفع النصوص أو الملفات لتلخيصها فوراً وطرح الأسئلة والدردشة معها.",
             t19h: "مولد كلمات المرور الآمنة", t19p: "توليد مفاتيح عشوائية فائقة الأمان وغير قابلة للاختراق فورياً.",
             t20h: "صانع وقارئ الـ QR Code", t20p: "صنع أكواد باركود مخصصة أو فحصها مباشرة عبر كاميرا الهاتف.",
             t21h: "منسق أكواد الويب (Beautifier)", t21p: "تنظيف وتنسيق وترتيب شفرات HTML و CSS و JavaScript المضغوطة.",
@@ -403,8 +413,7 @@
             t3_devh: "Herramientas de Desarrollador", t3_devp: "Ayudantes esenciales de ingeniería y utilidades de contenido.",
             t2_calh: "Calculadora Avanzada", t2_calp: "Ejecute ecuaciones matemáticas rápidas y variables lógicas.",
             t5h: "Voz a Texto (Dictado de Voz)", t5p: "Transcriba palabras habladas en documentos de texto digital.",
-            t7h: "Detector de Texto de IA", t7p: "Escanee ensayos para identificar patrones de texto sintético de IA.",
-            t11h: "Resumidor de PDF con IA", t11p: "Cargue archivos PDF masivos para analizar y consultar datos.",
+            t11h: "Chatear con Textos y Archivos", t11p: "Cargue archivos o pegue textos para resumir, interactuar y hacer preguntas instantáneamente.",
             t19h: "Generador de Contraseñas Seguras", t19p: "Genere claves aleatorias ultra seguras al instante.",
             t20h: "Generador y Escáner QR", t20p: "Genere matrices QR personalizadas o escanéelas instantáneamente.",
             t21h: "Embellecedor de HTML/CSS/JS", t21p: "Limpie y formatee códigos de programación desordenados.",
@@ -432,8 +441,7 @@
             t3_devh: "Outils Développeur", t3_devp: "Assistants d'ingénierie et utilitaires de contenu essentiels.",
             t2_calh: "Calculatrice Avancée", t2_calp: "Exécutez des équations mathématiques et des variables logiques.",
             t5h: "Reconnaissance Vocale (Dictée)", t5p: "Transcrivez les mots parlés en documents texte numériques.",
-            t7h: "Détecteur de Texte IA", t7p: "Scannez des essais pour identifier les modèles de texte IA.",
-            t11h: "Analyseur PDF IA", t11p: "Téléchargez des fichiers PDF volumineux pour analyser les données.",
+            t11h: "Discuter avec des Textes et Fichiers", t11p: "Téléchargez des fichiers ou collez des textes pour résumer, interagir et poser des questions.",
             t19h: "Générateur de Mot de Passe Sécurisé", t19p: "Génère instantanément des clés aléatoires ultra-sécurisées.",
             t20h: "Générateur et Scanner QR", t20p: "Générez des matrices QR personnalisées ou scannez-les.",
             t21h: "Enjoliveur HTML/CSS/JS", t21p: "Nettoyez et formatez les codes de programmation encombrés.",
@@ -454,7 +462,13 @@
         document.documentElement.lang = lang;
 
         document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-        if (event) event.target.classList.add('active');
+        if (event && event.target && event.target.classList) {
+            event.target.classList.add('active');
+        } else {
+            // تفعيل الزر الصحيح في البداية تلقائياً
+            const buttons = document.querySelectorAll('.lang-btn');
+            if (lang === 'en') buttons[0].classList.add('active');
+        }
 
         document.getElementById('site-desc').innerText = data.desc;
         document.getElementById('ad-text').innerHTML = `<i class="fa-solid fa-rectangle-ad"></i> ${data.ad}`;
@@ -463,8 +477,7 @@
         document.getElementById('title-video').innerHTML = `<i class="fa-solid fa-video"></i> ${data.video}`;
         document.getElementById('title-other').innerHTML = `<i class="fa-solid fa-code"></i> ${data.other}`;
 
-        // حلقة لترجمة الـ 25 أداة ديناميكياً
-        const keys = ['t1','t2','t3','t4','t14','t15','t16','t8','t12','t13','t6','t17','t18','t3_dev','t2_cal','t5','t7','t11','t19','t20','t21','t22','t23','t24','t25'];
+        const keys = ['t1','t2','t3','t4','t14','t15','t16','t8','t12','t13','t6','t17','t18','t3_dev','t2_cal','t5','t11','t19','t20','t21','t22','t23','t24','t25'];
         keys.forEach(k => {
             document.getElementById(`${k}-h`).innerText = data[`${k}h`];
             document.getElementById(`${k}-p`).innerText = data[`${k}p`];
@@ -493,7 +506,6 @@
         }
     };
 
-    // تشغيل اللغة الإنجليزية تلقائياً عند أول فتح للموقع
     switchLanguage('en');
 </script>
 
