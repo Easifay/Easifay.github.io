@@ -1,523 +1,324 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Easifay Tools</title>
+    <title>Professional Web Tools Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-main: #0b1528;
-            --bg-card: #111c35;
+            --bg-color: #0b1528;
+            --sidebar-bg: #0f1a30;
+            --card-bg: #111c35;
             --text-color: #ffffff;
             --text-muted: #8fa0dd;
-            --accent-blue: #00d2ff;
-            
-            /* تدرجات ألوان الأيقونات المتطورة */
-            --grad-photo: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            --grad-video: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
-            --grad-other: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --grad-dev: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            --border-color: #1e2d50;
+            --primary-accent: #00d2ff;
+            --hover-bg: #172646;
         }
 
-        * {
-            box-sizing: border-box;
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: transform 0.2s ease, background 0.3s ease;
-        }
-
-        body, html {
-            background-color: var(--bg-main);
-            color: var(--text-color);
-            height: 100%;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px; 
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .lang-switcher {
             display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-bottom: 10px;
+            min-height: 100vh;
+            direction: ltr;
         }
 
-        .lang-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-color);
-            padding: 6px 12px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
+        /* --- SIDEBAR STYLE --- */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0; bottom: 0; left: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
         }
 
-        .lang-btn.active {
-            background: var(--accent-blue);
-            color: #000;
-            border-color: var(--accent-blue);
-        }
-
-        header { text-align: center; padding: 30px 10px; }
-        header h1 { font-size: 36px; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.5px; }
-        header h1 span { color: var(--accent-blue); }
-        header p { color: var(--text-muted); font-size: 14px; }
-
-        .ad-area {
-            background: rgba(0, 210, 255, 0.05);
-            border: 1px dashed rgba(0, 210, 255, 0.3);
-            border-radius: 12px;
-            padding: 15px;
+        .sidebar-header {
+            padding: 25px 20px;
+            border-bottom: 1px solid var(--border-color);
             text-align: center;
-            margin-bottom: 30px;
+        }
+
+        .sidebar-header h2 {
+            margin: 0;
+            font-size: 20px;
+            color: var(--primary-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 20px 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 25px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-menu li a:hover, .sidebar-menu li a.active {
+            color: var(--text-color);
+            background-color: var(--hover-bg);
+            border-left: 4px solid var(--primary-accent);
+            padding-left: 21px;
+        }
+
+        .sidebar-footer {
+            padding: 15px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
             font-size: 12px;
             color: var(--text-muted);
         }
 
-        .section-box {
-            background-color: var(--bg-card);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 30px;
-            border: 1px solid #1e2d50;
+        /* --- MAIN CONTENT STYLE --- */
+        .main-content {
+            flex-grow: 1;
+            margin-left: 260px;
+            padding: 40px;
+            box-sizing: border-box;
         }
 
-        .section-title {
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; position: relative; height: auto; border-right: none; border-bottom: 1px solid var(--border-color); }
+            .main-content { margin-left: 0; padding: 20px; }
+        }
+
+        .dashboard-header {
+            margin-bottom: 40px;
+        }
+
+        .dashboard-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .dashboard-header p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        /* --- SEARCH BAR --- */
+        .search-container {
+            margin-bottom: 35px;
+            position: relative;
+            max-width: 500px;
+        }
+
+        .search-container input {
+            width: 100%;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 14px 20px 14px 45px;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        .search-container input:focus {
+            border-color: var(--primary-accent);
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
             font-size: 16px;
-            color: var(--accent-blue);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        }
+
+        /* --- TOOLS GRID --- */
+        .section-title {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin: 30px 0 20px 0;
             text-transform: uppercase;
-            font-weight: 600;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
         }
 
-        /* توزيع الشبكة على الشاشات الكبيرة (الكمبيوتر) */
-        .tools-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
-            gap: 20px; 
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
         }
 
-        .tool-item {
-            display: flex;
-            flex-direction: column; 
-            align-items: center;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.02);
-            padding: 25px 15px;
+        .tool-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 16px;
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            padding: 25px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .tool-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(0, 210, 255, 0.3);
-            transform: translateY(-5px); 
+        .tool-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-accent);
+            box-shadow: 0 12px 24px rgba(0, 210, 255, 0.15);
         }
 
-        .icon-circle {
-            width: 60px;
-            height: 60px;
-            border-radius: 16px; 
+        .icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            margin-bottom: 15px;
+            font-size: 20px;
             color: #ffffff;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .photo-route .icon-circle { background: var(--grad-photo); color: #2c3e50; }
-        .video-route .icon-circle { background: var(--grad-video); color: #2c3e50; }
-        .other-route .icon-circle { background: var(--grad-other); }
-        .dev-route .icon-circle { background: var(--grad-dev); color: #2c3e50; }
-
-        .tool-info h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; color: #ffffff; }
-        .tool-info p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
-
-        #tool-view-container {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-main);
-            z-index: 9999;
-            flex-direction: column;
+        .tool-card h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
         }
 
-        .tool-bar {
-            background-color: var(--bg-card);
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #1e2d50;
-        }
-
-        .back-btn {
-            background: none;
-            border: none;
-            color: var(--accent-blue);
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        html[dir="ltr"] .back-btn i { transform: rotate(180deg); }
-
-        iframe { width: 100%; height: 100%; border: none; background-color: transparent; }
-        footer { text-align: center; font-size: 11px; color: var(--text-muted); padding: 40px 0; }
-
-        /* ==================== كود التجاوب الخاص بالهواتف المحمولة ==================== */
-        @media (max-width: 600px) {
-            .container { padding: 12px; }
-            header h1 { font-size: 28px; }
-            .section-box { padding: 15px; border-radius: 14px; margin-bottom: 20px; }
-            .section-title { font-size: 14px; margin-bottom: 15px; }
-            
-            /* تفعيل شبكة عرض ثنائية مدمجة للهواتف المحمولة */
-            .tools-grid { 
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 10px; 
-            }
-
-            .tool-item { padding: 15px 8px; border-radius: 12px; }
-            .icon-circle { width: 45px; height: 45px; font-size: 18px; border-radius: 10px; margin-bottom: 10px; }
-            .tool-info h3 { font-size: 12px; margin-bottom: 4px; }
-            .tool-info p { font-size: 10px; line-height: 1.3; }
+        .tool-card p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 13.5px;
+            line-height: 1.5;
+            flex-grow: 1;
         }
     </style>
 </head>
 <body>
 
-<div class="container" id="main-homepage">
-    
-    <div class="lang-switcher">
-        <button class="lang-btn active" onclick="switchLanguage('en')">English</button>
-        <button class="lang-btn" onclick="switchLanguage('ar')">العربية</button>
-        <button class="lang-btn" onclick="switchLanguage('es')">Español</button>
-        <button class="lang-btn" onclick="switchLanguage('fr')">Français</button>
-    </div>
-
-    <header>
-        <h1>Easifay <span>Tools</span></h1>
-        <p id="site-desc">⚡ The ultimate all-in-one catalog of premium utility tools for creators and developers.</p>
-    </header>
-
-    <div class="ad-area" id="ad-text">
-        <i class="fa-solid fa-rectangle-ad"></i> Advertisement Area (Your Ad Code Will Go Here)
-    </div>
-
-    <div class="section-box">
-        <div class="section-title" id="title-photo"><i class="fa-solid fa-image"></i> Graphic & Imaging Hub</div>
-        <div class="tools-grid">
-            <div onclick="openTool('tools/bg-remover/index.html', 't1')" class="tool-item photo-route">
-                <div class="icon-circle"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-                <div class="tool-info"><h3 id="t1-h"></h3><p id="t1-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/image-enhancer/index.html', 't2')" class="tool-item photo-route">
-                <div class="icon-circle"><i class="fa-solid fa-up-long"></i></div>
-                <div class="tool-info"><h3 id="t2-h"></h3><p id="t2-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/ocr-image/index.html', 't3')" class="tool-item photo-route">
-                <div class="icon-circle"><i class="fa-solid fa-file-image"></i></div>
-                <div class="tool-info"><h3 id="t3-h"></h3><p id="t3-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/image-modifier/index.html', 't4')" class="tool-item photo-route">
-                <div class="icon-circle"><i class="fa-solid fa-crop-simple"></i></div>
-                <div class="tool-info"><h3 id="t4-h"></h3><p id="t4-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/image-to-webp/index.html', 't14')" class="tool-item photo-route">
-                <div class="icon-circle"><i class="fa-solid fa-file-image"></i></div>
-                <div class="tool-info"><h3 id="t14-h"></h3><p id="t14-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/meme-generator/index.html', 't15')" class="tool-item photo-route">
-                <div class="icon-circle"><i class="fa-regular fa-face-laugh-squint"></i></div>
-                <div class="tool-info"><h3 id="t15-h"></h3><p id="t15-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/yt-thumbnail/index.html', 't16')" class="tool-item photo-route">
-                <div class="icon-circle"><i class="fa-brands fa-youtube"></i></div>
-                <div class="tool-info"><h3 id="t16-h"></h3><p id="t16-p"></p></div>
-            </div>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fa-solid fa-cubes"></i> Dashboard Hub</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#" class="active"><i class="fa-solid fa-house"></i> Home Dashboard</a></li>
+            <li><a href="#text-section"><i class="fa-solid fa-font"></i> Text Tools</a></li>
+            <li><a href="#design-section"><i class="fa-solid fa-palette"></i> Design & FX Tools</a></li>
+            <li><a href="#finance-section"><i class="fa-solid fa-wallet"></i> Finance Tools</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <p>&copy; 2026 Local Tools Hub</p>
         </div>
     </div>
 
-    <div class="section-box">
-        <div class="section-title" id="title-video"><i class="fa-solid fa-video"></i> Video & Audio Production Hub</div>
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h1>Welcome to Web Tools Hub</h1>
+            <p>High-quality utility tools running 100% locally in your browser for absolute privacy.</p>
+        </div>
+
+        <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="toolSearch" placeholder="Search for tools instantly..." oninput="filterTools()">
+        </div>
+
+        <div class="section-title" id="text-section">Text & Content Utilities</div>
         <div class="tools-grid">
-            <div onclick="openTool('tools/video-compressor/index.html', 't8')" class="tool-item video-route">
-                <div class="icon-circle"><i class="fa-solid fa-compress"></i></div>
-                <div class="tool-info"><h3 id="t8-h"></h3><p id="t8-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/audio-separator/index.html', 't12')" class="tool-item video-route">
-                <div class="icon-circle"><i class="fa-solid fa-music"></i></div>
-                <div class="tool-info"><h3 id="t12-h"></h3><p id="t12-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/video-effects/index.html', 't13')" class="tool-item video-route">
-                <div class="icon-circle"><i class="fa-solid fa-film"></i></div>
-                <div class="tool-info"><h3 id="t13-h"></h3><p id="t13-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/text-to-speech/index.html', 't6')" class="tool-item video-route">
-                <div class="icon-circle"><i class="fa-solid fa-volume-high"></i></div>
-                <div class="tool-info"><h3 id="t6-h"></h3><p id="t6-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/screen-recorder/index.html', 't17')" class="tool-item video-route">
-                <div class="icon-circle"><i class="fa-solid fa-desktop"></i></div>
-                <div class="tool-info"><h3 id="t17-h"></h3><p id="t17-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/audio-converter/index.html', 't18')" class="tool-item video-route">
-                <div class="icon-circle"><i class="fa-solid fa-sliders"></i></div>
-                <div class="tool-info"><h3 id="t18-h"></h3><p id="t18-p"></p></div>
-            </div>
+            
+            <a href="tools/word-counter/index.html" class="tool-card">
+                <div class="icon-wrapper" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                    <i class="fa-solid fa-calculator"></i>
+                </div>
+                <h3>Word & Character Counter</h3>
+                <p>Analyze your text structure instantly. Count words, lines, spaces, and paragraphs in real time.</p>
+            </a>
+
+        </div>
+
+        <div class="section-title" id="design-section">Design & Visual Tools (100% Local)</div>
+        <div class="tools-grid">
+            
+            <a href="tools/photo-editor/index.html" class="tool-card">
+                <div class="icon-wrapper" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <h3>Photo FX Studio</h3>
+                <p>Apply live photo filters, adjust brightness, contrast, blur effects, and export high-quality graphics locally.</p>
+            </a>
+
+            <a href="tools/photo-overlay/index.html" class="tool-card">
+                <div class="icon-wrapper" style="background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <h3>Photo Overlay Studio</h3>
+                <p>Combine photos, overlay branding logos, adjust scaling or positions fluidly, and download the combined image.</p>
+            </a>
+
+        </div>
+
+        <div class="section-title" id="finance-section">Calculators & Health</div>
+        <div class="tools-grid">
+            
+            <a href="tools/calories/index.html" class="tool-card">
+                <div class="icon-wrapper" style="background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+                <h3>Calorie & BMR Calculator</h3>
+                <p>Calculate your daily energy expenditure, BMR, and track nutritional health values instantly.</p>
+            </a>
+
+            <a href="tools/currency/index.html" class="tool-card">
+                <div class="icon-wrapper" style="background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);">
+                    <i class="fa-solid fa-money-bill-transfer"></i>
+                </div>
+                <h3>Local Currency Exchanger</h3>
+                <p>Quick mathematical currency exchange rates helper working locally based on your inputs.</p>
+            </a>
+
         </div>
     </div>
 
-    <div class="section-box">
-        <div class="section-title" id="title-other"><i class="fa-solid fa-code"></i> Developers, Calculators & AI Hub</div>
-        <div class="tools-grid">
-            <div onclick="openTool('tools/dev-tools/index.html', 't3_dev')" class="tool-item dev-route">
-                <div class="icon-circle"><i class="fa-solid fa-laptop-code"></i></div>
-                <div class="tool-info"><h3 id="t3_dev-h"></h3><p id="t3_dev-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/calculator/index.html', 't2_cal')" class="tool-item dev-route">
-                <div class="icon-circle"><i class="fa-solid fa-calculator"></i></div>
-                <div class="tool-info"><h3 id="t2_cal-h"></h3><p id="t2_cal-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/speech-to-text/index.html', 't5')" class="tool-item other-route">
-                <div class="icon-circle"><i class="fa-solid fa-microphone"></i></div>
-                <div class="tool-info"><h3 id="t5-h"></h3><p id="t5-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/pdf-reader/index.html', 't11')" class="tool-item other-route">
-                <div class="icon-circle"><i class="fa-solid fa-comments"></i></div>
-                <div class="tool-info"><h3 id="t11-h"></h3><p id="t11-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/password-gen/index.html', 't19')" class="tool-item dev-route">
-                <div class="icon-circle"><i class="fa-solid fa-key"></i></div>
-                <div class="tool-info"><h3 id="t19-h"></h3><p id="t19-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/qr-generator/index.html', 't20')" class="tool-item dev-route">
-                <div class="icon-circle"><i class="fa-solid fa-qrcode"></i></div>
-                <div class="tool-info"><h3 id="t20-h"></h3><p id="t20-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/code-beautifier/index.html', 't21')" class="tool-item dev-route">
-                <div class="icon-circle"><i class="fa-solid fa-terminal"></i></div>
-                <div class="tool-info"><h3 id="t21-h"></h3><p id="t21-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/markdown-editor/index.html', 't22')" class="tool-item dev-route">
-                <div class="icon-circle"><i class="fa-brands fa-markdown"></i></div>
-                <div class="tool-info"><h3 id="t22-h"></h3><p id="t22-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/age-calculator/index.html', 't23')" class="tool-item other-route">
-                <div class="icon-circle"><i class="fa-solid fa-calendar-days"></i></div>
-                <div class="tool-info"><h3 id="t23-h"></h3><p id="t23-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/bmi-calculator/index.html', 't24')" class="tool-item other-route">
-                <div class="icon-circle"><i class="fa-solid fa-heart-pulse"></i></div>
-                <div class="tool-info"><h3 id="t24-h"></h3><p id="t24-p"></p></div>
-            </div>
-            <div onclick="openTool('tools/word-counter/index.html', 't25')" class="tool-item other-route">
-                <div class="icon-circle"><i class="fa-solid fa-arrow-1-9"></i></div>
-                <div class="tool-info"><h3 id="t25-h"></h3><p id="t25-p"></p></div>
-            </div>
-        </div>
-    </div>
-
-    <footer>&copy; 2026 Easifay Tools. All rights reserved.</footer>
-</div>
-
-<div id="tool-view-container">
-    <div class="tool-bar">
-        <button class="back-btn" onclick="closeTool()"><i class="fa-solid fa-arrow-right"></i> <span id="back-text">Back to Tools</span></button>
-        <span id="current-tool-title" style="margin-right: 20px; margin-left: 20px; font-weight: 600; font-size: 14px;"></span>
-    </div>
-    <iframe id="tool-frame" src=""></iframe>
-</div>
-
-<script>
-    const translations = {
-        en: {
-            dir: "ltr", back: "Back to Tools", desc: "⚡ The ultimate all-in-one catalog of premium utility tools for creators and developers.", ad: "Advertisement Area (Your Ad Code)",
-            photo: "Graphic & Imaging Hub", video: "Video & Audio Production Hub", other: "Developers, Calculators & AI Hub",
-            t1h: "Image Background Remover", t1p: "Isolate subjects from backgrounds instantly with one click.",
-            t2h: "Image Enhancer & Upscaler", t2p: "Increase resolution and clarify blurry or low-res images.",
-            t3h: "Text Extractor from Images (OCR)", t3p: "Convert printed or handwritten image text into editable documents.",
-            t4h: "Format Converter & Editor", t4p: "Convert formats (PNG, WebP, JPG), crop, and resize layout bounds.",
-            t14h: "Image to WebP Converter", t14p: "Optimize image file size by converting them to next-gen WebP format.",
-            t15h: "Meme Generator", t15p: "Create customs memes easily with popular layouts and texts.",
-            t16h: "YouTube Thumbnail Downloader", t16p: "Extract and download any YouTube video thumbnail in Ultra HD.",
-            t8h: "Video Compressor & Cutter", t8p: "Reduce video file weight and trim unwanted layout segments.",
-            t12h: "Vocal Remover & Audio Splitter", t12p: "Separate vocals from background music tracks with AI precision.",
-            t13h: "Instant Video Effects & Filters", t13p: "Apply real-time visual fx and cinematic lookup filters.",
-            t6h: "Text to Speech (Voice Reader)", t6p: "Synthesize text blocks into high-fidelity lifelike vocal feeds.",
-            t17h: "Screen & Audio Recorder", t17p: "Record your desktop window screen and internal audio instantly online.",
-            t18h: "Audio Converter", t18p: "Convert audio formats smoothly (MP3, WAV, M4A, OGG).",
-            t3_devh: "Developer Hub Tools", t3_devp: "Essential engineering helpers and content utility suites.",
-            t2_calh: "Advanced Core Calculator", t2_calp: "Execute quick mathematical equations and logic variables.",
-            t5h: "Speech to Text (Voice Dictation)", t5p: "Transcribe spoken words into structured digital text documents.",
-            t11h: "Chat with Texts & Files", t11p: "Upload files or paste text blocks to instantly summarize, interact, and query.",
-            t19h: "Secure Password Generator", t19p: "Generate ultra-secure uncrackable random keys instantly.",
-            t20h: "QR Code Generator & Scanner", t20p: "Generate customized QR matrices or scan them instantly via camera.",
-            t21h: "HTML/CSS/JS Beautifier", t21p: "Clean, format, and un-minify messed up programming code.",
-            t22h: "Markdown Editor & Previewer", t22p: "Write markdown syntax and view live visual renders instantly.",
-            t23h: "Age & Date Calculator", t23p: "Calculate precise age metrics and time intervals between dates.",
-            t24h: "BMI Calculator", t24p: "Determine your ideal health metrics via Body Mass Index equations.",
-            t25h: "Word & Character Counter", t25p: "Count absolute text weights, characters, paragraphs, and reading times."
-        },
-        ar: {
-            dir: "rtl", back: "العودة للأدوات", desc: "⚡ المنصة المتكاملة لأدوات المطورين، المصممين وصناع المحتوى التقني.", ad: "مساحة إعلانية مدمجة ذكياً",
-            photo: "أدوات الصور والغرافيك", video: "أدوات الفيديو والمونتاج الصوتي", other: "أدوات المطورين والحسابات والذكاء الاصطناعي",
-            t1h: "إزالة خلفية الصور", t1p: "عزل العناصر عن الخلفية بدقة وبنقرة واحدة.",
-            t2h: "تحسين جودة الصورة وتكبيرها", t2p: "زيادة دقة الصور الضعيفة وتوضيح تفاصيلها العميقة.",
-            t3h: "استخراج النصوص من الصور (OCR)", t3p: "تحويل الصور المكتوبة إلى نصوص رقمية قابلة للتعديل.",
-            t4h: "تعديل وتحويل الصور والمحتوى", t4p: "تغيير صيغ الصور (PNG, WebP, JPG) وقص وتعديل الأبعاد.",
-            t14h: "تحويل الصور إلى WebP", t14p: "ضغط حجم الصور بشكل هائل عن طريق تحويلها لصيغة الويب الجيل الجديد.",
-            t15h: "صانع الكوميكس والميمز", t15p: "اصنع الكوميكس الساخرة بسهولة عبر قوالب جاهزة ونصوص مخصصة.",
-            t16h: "تحميل غلاف فيديوهات اليوتيوب", t16p: "استخراج وتحميل الغلاف المصغر لأي فيديو يوتيوب بدقة Ultra HD.",
-            t8h: "ضغط وتقطيع الفيديو", t8p: "تقليل حجم ملفات الفيديو وقص الأجزاء غير المرغوبة.",
-            t12h: "المونتاج الصوتي وفصل الموسيقى", t12p: "فصل صوت المغني عن الموسيقى الخلفية بدقة الذكاء الاصطناعي.",
-            t13h: "تعديل وتأثيرات الفيديو الفورية", t13p: "إضافة فلاتر ومؤثرات بصرية فورية وسينمائية لمقاطعك.",
-            t6h: "تحويل النص إلى كلام مسموع", t6p: "توليد أصوات طبيعية تعليقية واحترافية من النصوص المكتوبة.",
-            t17h: "مسجل الشاشة والصوت", t17p: "تسجيل شاشة الحاسوب وصوت النظام الداخلي مباشرة أونلاين بدون برامج.",
-            t18h: "تحويل صيغ الصوت", t18p: "تحويل صيغ الملفات الصوتية بسلاسة (MP3, WAV, M4A).",
-            t3_devh: "أدوات المطورين", t3_devp: "مجموعة المساعدات الهندسية والأدوات البرمجية الحيوية.",
-            t2_calh: "أداة الحسابات المتقدمة", t2_calp: "إجراء العمليات الحسابية والمعادلات الرياضية السريعة.",
-            t5h: "تحويل الكلام إلى نص مكتوب", t5p: "إملاء صوتي دقيق لتحويل وتفريغ المحادثات لنصوص.",
-            t11h: "الدردشة مع النصوص والملفات", t11p: "ارفع النصوص أو الملفات لتلخيصها فوراً وطرح الأسئلة والدردشة معها.",
-            t19h: "مولد كلمات المرور الآمنة", t19p: "توليد مفاتيح عشوائية فائقة الأمان وغير قابلة للاختراق فورياً.",
-            t20h: "قارئ وصانع الـ QR Code", t20p: "صنع أكواد باركود مخصصة أو فحصها مباشرة عبر كاميرا الهاتف.",
-            t21h: "منسق أكواد الويب (Beautifier)", t21p: "تنظيف وتنسيق وترتيب شفرات HTML و CSS و JavaScript المضغوطة.",
-            t22h: "محرر ومعاين الماركداون", t22p: "كتابة نصوص الماركداون البرمجية ومعاينتها حياً ومباشرة.",
-            t23h: "حاسبة العمر والتواريخ", t23p: "حساب دقيق للعمر بالسنين والأيام وحساب الفترات بين أي تاريخين.",
-            t24h: "حاسبة الوزن المثالي BMI", t24p: "معرفة مؤشر كتلة جسمك وحالتك الصحية بناءً على معادلات الوزن والطول.",
-            t25h: "عداد الكلمات والحروف الفوري", t25p: "حساب عدد الكلمات، الحروف، الفقرات، وزمن القراءة المتوقع للنصوص."
-        },
-        es: {
-            dir: "ltr", back: "Volver a Herramientas", desc: "⚡ El catálogo definitivo de herramientas premium para creadores y desarrolladores.", ad: "Área de Publicidad (Su Código de Anuncio)",
-            photo: "Centro de Gráficos e Imágenes", video: "Centro de Producción de Video y Audio", other: "Desarrolladores, Calculadoras y Centro de IA",
-            t1h: "Eliminador de Fondo de Imagen", t1p: "Aísle sujetos de los fondos instantáneamente con un solo clic.",
-            t2h: "Mejorador y Escalador de Imagen", t2p: "Aumente la resolución y aclare imágenes borrosas.",
-            t3h: "Extractor de Texto de Imágenes (OCR)", t3p: "Convierta texto de imagen impreso o manuscrito en documentos editables.",
-            t4h: "Convertidor de Formato y Editor", t4p: "Convierta formatos (PNG, WebP, JPG), recorte y cambie tamaños.",
-            t14h: "Convertidor de Imagen a WebP", t14p: "Optimice el tamaño convirtiendo imágenes al formato de última generación WebP.",
-            t15h: "Generador de Memes", t15p: "Cree memes personalizados fácilmente con diseños populares.",
-            t16h: "Descargador de Miniaturas de YouTube", t16p: "Extraiga y descargue cualquier miniatura de video de YouTube en Ultra HD.",
-            t8h: "Compresor y Cortador de Video", t8p: "Reduzca el peso del archivo de video y recorte segmentos.",
-            t12h: "Eliminador de Voces y Separador de Audio", t12p: "Separe las voces de las pistas de música con precisión de IA.",
-            t13h: "Efectos y Filtros de Video Instantáneos", t13p: "Aplique efectos visuales en tiempo real y filtros cinematográficos.",
-            t6h: "Texto a Voz (Lector de Voz)", t6p: "Sintetice bloques de texto en transmisiones de voz realistas.",
-            t17h: "Grabador de Pantalla y Audio", t17p: "Grabe su pantalla y audio interno instantáneamente en línea.",
-            t18h: "Convertidor de Audio", t18p: "Convierta formatos de audio sin problemas (MP3, WAV, M4A).",
-            t3_devh: "Herramientas de Desarrollador", t3_devp: "Ayudantes esenciales de ingeniería y utilidades de contenido.",
-            t2_calh: "Calculadora Avanzada", t2_calp: "Ejecute ecuaciones matemáticas rápidas y variables lógicas.",
-            t5h: "Voz a Texto (Dictado de Voz)", t5p: "Transcriba palabras habladas en documentos de texto digital.",
-            t11h: "Chatear con Textos y Archivos", t11p: "Cargue archivos o pegue textos para resumir, interactuar y hacer preguntas instantáneamente.",
-            t19h: "Generador de Contraseñas Seguras", t19p: "Genere claves aleatorias ultra seguras al instante.",
-            t20h: "Generador y Escáner QR", t20p: "Genere matrices QR personalizadas o escanéelas instantáneamente.",
-            t21h: "Embellecedor de HTML/CSS/JS", t21p: "Limpie y formatee códigos de programación desordenados.",
-            t22h: "Editor y Vista Previa de Markdown", t22p: "Escriba sintaxis markdown y vea renders visuales en vivo.",
-            t23h: "Calculadora de Edad y Fechas", t23p: "Calcule métricas de edad precisas e intervalos de tiempo.",
-            t24h: "Calculadora de IMC", t24p: "Determine sus métricas de salud a través del Índice de Masa Corporal.",
-            t25h: "Contador de Palabras y Caracteres", t25p: "Cuente palabras, caracteres, párrafos y tiempos de lectura."
-        },
-        fr: {
-            dir: "ltr", back: "Retour aux Outils", desc: "⚡ Le catalogue ultime d'outils premium pour les créateurs et les développeurs.", ad: "Zone publicitaire (Votre code publicitaire)",
-            photo: "Hub Graphique & Imagerie", video: "Hub Production Vidéo & Audio", other: "Développeurs, Calculateurs & Hub IA",
-            t1h: "Suppresseur d'Arrière-plan d'Image", t1p: "Isolez instantanément les sujets des arrière-plans en un clic.",
-            t2h: "Améliorateur d'Image & Upscaler", t2p: "Augmentez la résolution et clarifiez les images floues.",
-            t3h: "Extracteur de Texte à partir d'Images (OCR)", t3p: "Convertissez le texte d'une image en documents modifiables.",
-            t4h: "Convertisseur de Format & Éditeur", t4p: "Convertissez les formats (PNG, WebP, JPG), cadrez et redimensionnez.",
-            t14h: "Convertisseur Image vers WebP", t14p: "Optimisez la taille des images en les convertissant au format WebP.",
-            t15h: "Générateur de Memes", t15p: "Créez facilement des mèmes personnalisés avec des textes.",
-            t16h: "Téléchargeur de Miniatures YouTube", t16p: "Extrayez et téléchargez les mini mini de YouTube en Ultra HD.",
-            t8h: "Compresor & Coupeur Vidéo", t8p: "Réduisez le poids des fichiers vidéo et coupez les segments.",
-            t12h: "Suppresseur de Voix & Séparateur Audio", t12p: "Séparez les voix de la musique avec la précision de l'IA.",
-            t13h: "Effets Vidéo Instantanés & Filtres", t13p: "Appliquez des effets visuels en temps réel et des filtres.",
-            t6h: "Synthèse Vocale (Lecteur de Texte)", t6p: "Synthétisez des blocs de texte en flux vocaux réalistes.",
-            t17h: "Enregistreur d'Écran et d'Audio", t17p: "Enregistrez votre écran et votre audio interne en ligne instantanément.",
-            t18h: "Convertisseur Audio", t18p: "Convertissez les formats audio en toute simplicité (MP3, WAV, M4A).",
-            t3_devh: "Outils Développeur", t3_devp: "Assistants d'ingénierie et utilitaires de contenu essentiels.",
-            t2_calh: "Calculatrice Avancée", t2_calp: "Exécutez des équations mathématiques et des variables logiques.",
-            t5h: "Reconnaissance Vocale (Dictée)", t5p: "Transcrivez les mots parlés en documents texte numériques.",
-            t11h: "Discuter avec des Textes et Fichiers", t11p: "Téléchargez des fichiers ou collez des textes pour résumer, interagir et poser des questions.",
-            t19h: "Générateur de Mot de Passe Sécurisé", t19p: "Génère instantanément des clés aléatoires ultra-sécurisées.",
-            t20h: "Générateur et Scanner QR", t20p: "Générez des matrices QR personnalisées ou scannez-les.",
-            t21h: "Enjoliveur HTML/CSS/JS", t21p: "Nettoyez et formatez les codes de programmation encombrés.",
-            t22h: "Éditeur et Aperçu Markdown", t22p: "Écrivez en markdown et affichez des rendus visuels en direct.",
-            t23h: "Calculateur d'Âge et de Date", t23p: "Calculez des métriques d'âge précises et des intervalles de temps.",
-            t24h: "Calculateur d'IMC", t24p: "Déterminez vos mesures de santé via l'Indice de Masse Corporelle.",
-            t25h: "Compteur de Mots et de Caractères", t25p: "Comptez les mots, les caractères, les paragraphes et les temps de lecture."
+    <script>
+        function filterTools() {
+            const input = document.getElementById('toolSearch').value.toLowerCase();
+            const cards = document.getElementsByClassName('tool-card');
+            
+            for (let i = 0; i < cards.length; i++) {
+                const title = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
+                const desc = cards[i].getElementsByTagName('p')[0].innerText.toLowerCase();
+                
+                if (title.includes(input) || desc.includes(input)) {
+                    cards[i].style.display = "flex";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
         }
-    };
-
-    let currentLang = 'en';
-
-    function switchLanguage(lang) {
-        currentLang = lang;
-        const data = translations[lang];
-        
-        document.documentElement.dir = data.dir;
-        document.documentElement.lang = lang;
-
-        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-        
-        const buttons = document.querySelectorAll('.lang-btn');
-        if (lang === 'en') buttons[0].classList.add('active');
-        if (lang === 'ar') buttons[1].classList.add('active');
-        if (lang === 'es') buttons[2].classList.add('active');
-        if (lang === 'fr') buttons[3].classList.add('active');
-
-        document.getElementById('site-desc').innerText = data.desc;
-        document.getElementById('ad-text').innerHTML = `<i class="fa-solid fa-rectangle-ad"></i> ${data.ad}`;
-        document.getElementById('back-text').innerText = data.back;
-        document.getElementById('title-photo').innerHTML = `<i class="fa-solid fa-image"></i> ${data.photo}`;
-        document.getElementById('title-video').innerHTML = `<i class="fa-solid fa-video"></i> ${data.video}`;
-        document.getElementById('title-other').innerHTML = `<i class="fa-solid fa-code"></i> ${data.other}`;
-
-        const keys = ['t1','t2','t3','t4','t14','t15','t16','t8','t12','t13','t6','t17','t18','t3_dev','t2_cal','t5','t11','t19','t20','t21','t22','t23','t24','t25'];
-        keys.forEach(k => {
-            document.getElementById(`${k}-h`).innerText = data[`${k}h`];
-            document.getElementById(`${k}-p`).innerText = data[`${k}p`];
-        });
-    }
-
-    function openTool(url, toolKey) {
-        document.getElementById('main-homepage').style.display = 'none';
-        const container = document.getElementById('tool-view-container');
-        container.style.display = 'flex';
-        
-        document.getElementById('current-tool-title').innerText = translations[currentLang][toolKey + 'h'] || toolKey;
-        document.getElementById('tool-frame').src = url;
-        history.pushState({ inTool: true }, toolKey, "#" + toolKey);
-    }
-
-    function closeTool() {
-        document.getElementById('tool-view-container').style.display = 'none';
-        document.getElementById('main-homepage').style.display = 'block';
-        document.getElementById('tool-frame').src = "";
-    }
-
-    window.onpopstate = function(event) {
-        if (document.getElementById('tool-view-container').style.display === 'flex') {
-            closeTool();
-        }
-    };
-
-    switchLanguage('en');
-</script>
-
+    </script>
 </body>
 </html>
