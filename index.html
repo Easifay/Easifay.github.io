@@ -13,7 +13,7 @@
             --text-muted: #8fa0dd;
             --accent-blue: #00d2ff;
             
-            /* تدرجات ألوان الأيقونات الجديدة */
+            /* تدرجات ألوان الأيقونات المتطورة */
             --grad-photo: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
             --grad-video: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
             --grad-other: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -36,7 +36,7 @@
         }
 
         .container {
-            max-width: 1200px; /* توسيع الحاوية لتأخذ الأدوات راحتها بجانب بعضها */
+            max-width: 1200px; 
             margin: 0 auto;
             padding: 20px;
         }
@@ -100,7 +100,7 @@
             font-weight: 600;
         }
 
-        /* الكود السحري الذي يجعل الأدوات بجانب بعضها بشكل تلقائي ومتجاوب */
+        /* توزيع الشبكة على الشاشات الكبيرة (الكمبيوتر) */
         .tools-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
@@ -109,7 +109,7 @@
 
         .tool-item {
             display: flex;
-            flex-direction: column; /* ترتيب المحتوى داخلياً (أيقونة ثم نص تحته) */
+            flex-direction: column; 
             align-items: center;
             text-align: center;
             background: rgba(255, 255, 255, 0.02);
@@ -123,14 +123,13 @@
         .tool-item:hover {
             background: rgba(255, 255, 255, 0.05);
             border-color: rgba(0, 210, 255, 0.3);
-            transform: translateY(-5px); /* حركة صعود خفيفة عند تمرير الماوس */
+            transform: translateY(-5px); 
         }
 
-        /* تصميم الأيقونات الملونة البارزة */
         .icon-circle {
             width: 60px;
             height: 60px;
-            border-radius: 16px; /* زوايا ناعمة حديثة */
+            border-radius: 16px; 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -140,7 +139,6 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
 
-        /* توزيع التدرجات اللونية للأقسام */
         .photo-route .icon-circle { background: var(--grad-photo); color: #2c3e50; }
         .video-route .icon-circle { background: var(--grad-video); color: #2c3e50; }
         .other-route .icon-circle { background: var(--grad-other); }
@@ -183,6 +181,25 @@
 
         iframe { width: 100%; height: 100%; border: none; background-color: transparent; }
         footer { text-align: center; font-size: 11px; color: var(--text-muted); padding: 40px 0; }
+
+        /* ==================== كود التجاوب الخاص بالهواتف المحمولة ==================== */
+        @media (max-width: 600px) {
+            .container { padding: 12px; }
+            header h1 { font-size: 28px; }
+            .section-box { padding: 15px; border-radius: 14px; margin-bottom: 20px; }
+            .section-title { font-size: 14px; margin-bottom: 15px; }
+            
+            /* تفعيل شبكة عرض ثنائية مدمجة للهواتف المحمولة */
+            .tools-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 10px; 
+            }
+
+            .tool-item { padding: 15px 8px; border-radius: 12px; }
+            .icon-circle { width: 45px; height: 45px; font-size: 18px; border-radius: 10px; margin-bottom: 10px; }
+            .tool-info h3 { font-size: 12px; margin-bottom: 4px; }
+            .tool-info p { font-size: 10px; line-height: 1.3; }
+        }
     </style>
 </head>
 <body>
@@ -205,7 +222,6 @@
         <i class="fa-solid fa-rectangle-ad"></i> Advertisement Area (Your Ad Code Will Go Here)
     </div>
 
-    <!-- ================= 1. GRAPHIC & IMAGING HUB ================= -->
     <div class="section-box">
         <div class="section-title" id="title-photo"><i class="fa-solid fa-image"></i> Graphic & Imaging Hub</div>
         <div class="tools-grid">
@@ -218,7 +234,7 @@
                 <div class="tool-info"><h3 id="t2-h"></h3><p id="t2-p"></p></div>
             </div>
             <div onclick="openTool('tools/ocr-image/index.html', 't3')" class="tool-item photo-route">
-                <div class="icon-circle"><i class="fa-solid fa-file-font"></i></div>
+                <div class="icon-circle"><i class="fa-solid fa-file-image"></i></div>
                 <div class="tool-info"><h3 id="t3-h"></h3><p id="t3-p"></p></div>
             </div>
             <div onclick="openTool('tools/image-modifier/index.html', 't4')" class="tool-item photo-route">
@@ -240,7 +256,6 @@
         </div>
     </div>
 
-    <!-- ================= 2. VIDEO & AUDIO HUB ================= -->
     <div class="section-box">
         <div class="section-title" id="title-video"><i class="fa-solid fa-video"></i> Video & Audio Production Hub</div>
         <div class="tools-grid">
@@ -271,7 +286,6 @@
         </div>
     </div>
 
-    <!-- ================= 3. DEVELOPERS, CALCULATORS & AI HUB ================= -->
     <div class="section-box">
         <div class="section-title" id="title-other"><i class="fa-solid fa-code"></i> Developers, Calculators & AI Hub</div>
         <div class="tools-grid">
@@ -384,7 +398,7 @@
             t5h: "تحويل الكلام إلى نص مكتوب", t5p: "إملاء صوتي دقيق لتحويل وتفريغ المحادثات لنصوص.",
             t11h: "الدردشة مع النصوص والملفات", t11p: "ارفع النصوص أو الملفات لتلخيصها فوراً وطرح الأسئلة والدردشة معها.",
             t19h: "مولد كلمات المرور الآمنة", t19p: "توليد مفاتيح عشوائية فائقة الأمان وغير قابلة للاختراق فورياً.",
-            t20h: "QR Code قارئ وصانع", t20p: "صنع أكواد باركود مخصصة أو فحصها مباشرة عبر كاميرا الهاتف.",
+            t20h: "قارئ وصانع الـ QR Code", t20p: "صنع أكواد باركود مخصصة أو فحصها مباشرة عبر كاميرا الهاتف.",
             t21h: "منسق أكواد الويب (Beautifier)", t21p: "تنظيف وتنسيق وترتيب شفرات HTML و CSS و JavaScript المضغوطة.",
             t22h: "محرر ومعاين الماركداون", t22p: "كتابة نصوص الماركداون البرمجية ومعاينتها حياً ومباشرة.",
             t23h: "حاسبة العمر والتواريخ", t23p: "حساب دقيق للعمر بالسنين والأيام وحساب الفترات بين أي تاريخين.",
@@ -428,8 +442,8 @@
             t4h: "Convertisseur de Format & Éditeur", t4p: "Convertissez les formats (PNG, WebP, JPG), cadrez et redimensionnez.",
             t14h: "Convertisseur Image vers WebP", t14p: "Optimisez la taille des images en les convertissant au format WebP.",
             t15h: "Générateur de Memes", t15p: "Créez facilement des mèmes personnalisés avec des textes.",
-            t16h: "Téléchargeur de Miniatures YouTube", t16p: "Extrayez et téléchargez les miniatures YouTube en Ultra HD.",
-            t8h: "Compresor & Coupeur Vidéo", t8p: "Réduisez le poids des fichiers vidéo y coupez les segments.",
+            t16h: "Téléchargeur de Miniatures YouTube", t16p: "Extrayez et téléchargez les mini mini de YouTube en Ultra HD.",
+            t8h: "Compresor & Coupeur Vidéo", t8p: "Réduisez le poids des fichiers vidéo et coupez les segments.",
             t12h: "Suppresseur de Voix & Séparateur Audio", t12p: "Séparez les voix de la musique avec la précision de l'IA.",
             t13h: "Effets Vidéo Instantanés & Filtres", t13p: "Appliquez des effets visuels en temps réel et des filtres.",
             t6h: "Synthèse Vocale (Lecteur de Texte)", t6p: "Synthétisez des blocs de texte en flux vocaux réalistes.",
@@ -460,7 +474,6 @@
 
         document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
         
-        // تفعيل زر اللغة الصحيح برمجياً وآلياً
         const buttons = document.querySelectorAll('.lang-btn');
         if (lang === 'en') buttons[0].classList.add('active');
         if (lang === 'ar') buttons[1].classList.add('active');
