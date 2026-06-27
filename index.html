@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html-tag">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Web Tools Dashboard</title>
+    <title>Web Tools Hub - Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -21,201 +21,65 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            min-height: 100vh;
-            direction: ltr;
+            margin: 0; padding: 0; display: flex; min-height: 100vh;
+            direction: ltr; transition: all 0.3s ease;
         }
 
-        /* --- SIDEBAR STYLE --- */
+        /* --- SIDEBAR --- */
         .sidebar {
-            width: 260px;
-            background-color: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            top: 0; bottom: 0; left: 0;
-            z-index: 100;
+            width: 260px; background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color); display: flex;
+            flex-direction: column; position: fixed; top: 0; bottom: 0; left: 0; z-index: 100;
             transition: all 0.3s ease;
         }
 
-        .sidebar-header {
-            padding: 25px 20px;
-            border-bottom: 1px solid var(--border-color);
-            text-align: center;
-        }
+        /* RTL Alignment */
+        body.rtl-mode { direction: rtl; }
+        body.rtl-mode .sidebar { left: auto; right: 0; border-right: none; border-left: 1px solid var(--border-color); }
+        body.rtl-mode .main-content { margin-left: 0; margin-right: 260px; }
 
-        .sidebar-header h2 {
-            margin: 0;
-            font-size: 20px;
-            color: var(--primary-accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
+        .sidebar-header { padding: 25px 20px; border-bottom: 1px solid var(--border-color); text-align: center; }
+        .sidebar-header h2 { margin: 0; font-size: 20px; color: var(--primary-accent); display: flex; align-items: center; justify-content: center; gap: 10px; }
+        
+        .sidebar-menu { list-style: none; padding: 20px 0; margin: 0; display: flex; flex-direction: column; gap: 5px; flex-grow: 1; overflow-y: auto; }
+        .sidebar-menu li a { display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: var(--text-muted); text-decoration: none; font-size: 15px; cursor: pointer; transition: all 0.2s; }
+        .sidebar-menu li a:hover, .sidebar-menu li a.active { color: var(--text-color); background-color: var(--hover-bg); }
+        body.rtl-mode .sidebar-menu li a.active { border-right: 4px solid var(--primary-accent); border-left: none; padding-right: 21px; }
+        body:not(.rtl-mode) .sidebar-menu li a.active { border-left: 4px solid var(--primary-accent); border-right: none; padding-left: 21px; }
 
-        .sidebar-menu {
-            list-style: none;
-            padding: 20px 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            flex-grow: 1;
-            overflow-y: auto;
-        }
+        .sidebar-footer { padding: 15px; border-top: 1px solid var(--border-color); text-align: center; font-size: 12px; color: var(--text-muted); }
 
-        .sidebar-menu li a {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 12px 25px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 15px;
-            transition: all 0.2s ease;
-        }
+        /* --- MAIN CONTENT --- */
+        .main-content { flex-grow: 1; margin-left: 260px; padding: 40px; box-sizing: border-box; transition: margin 0.3s ease; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 35px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
+        
+        .lang-btn { background: var(--card-bg); border: 1px solid var(--border-color); color: #fff; padding: 8px 18px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 8px; transition: border 0.2s; }
+        .lang-btn:hover { border-color: var(--primary-accent); }
 
-        .sidebar-menu li a:hover, .sidebar-menu li a.active {
-            color: var(--text-color);
-            background-color: var(--hover-bg);
-            border-left: 4px solid var(--primary-accent);
-            padding-left: 21px;
-        }
+        .search-container { margin-bottom: 35px; position: relative; max-width: 500px; }
+        .search-container input { width: 100%; background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 14px 20px 14px 45px; border-radius: 12px; color: #fff; font-size: 15px; outline: none; box-sizing: border-box; transition: border-color 0.2s; }
+        .search-container input:focus { border-color: var(--primary-accent); }
+        .search-container i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        
+        body.rtl-mode .search-container input { padding: 14px 45px 14px 20px; }
+        body.rtl-mode .search-container i { left: auto; right: 18px; }
 
-        .sidebar-footer {
-            padding: 15px;
-            border-top: 1px solid var(--border-color);
-            text-align: center;
-            font-size: 12px;
-            color: var(--text-muted);
-        }
+        .section-title { font-size: 16px; color: var(--text-muted); margin: 35px 0 20px 0; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; }
 
-        /* --- MAIN CONTENT STYLE --- */
-        .main-content {
-            flex-grow: 1;
-            margin-left: 260px;
-            padding: 40px;
-            box-sizing: border-box;
-        }
+        /* --- GRID --- */
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 25px; }
+        .tool-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 25px; text-decoration: none; color: var(--text-color); display: flex; flex-direction: column; gap: 15px; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .tool-card:hover { transform: translateY(-5px); border-color: var(--primary-accent); box-shadow: 0 12px 24px rgba(0, 210, 255, 0.15); }
+        .icon-wrapper { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #ffffff; }
+        .tool-card h3 { margin: 0; font-size: 18px; font-weight: 600; }
+        .tool-card p { margin: 0; color: var(--text-muted); font-size: 13.5px; line-height: 1.5; flex-grow: 1; }
 
         @media (max-width: 768px) {
             body { flex-direction: column; }
-            .sidebar { width: 100%; position: relative; height: auto; border-right: none; border-bottom: 1px solid var(--border-color); }
-            .main-content { margin-left: 0; padding: 20px; }
-        }
-
-        .dashboard-header {
-            margin-bottom: 40px;
-        }
-
-        .dashboard-header h1 {
-            margin: 0 0 10px 0;
-            font-size: 32px;
-            font-weight: 700;
-        }
-
-        .dashboard-header p {
-            margin: 0;
-            color: var(--text-muted);
-            font-size: 15px;
-        }
-
-        /* --- SEARCH BAR --- */
-        .search-container {
-            margin-bottom: 35px;
-            position: relative;
-            max-width: 500px;
-        }
-
-        .search-container input {
-            width: 100%;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 14px 20px 14px 45px;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 15px;
-            outline: none;
-            box-sizing: border-box;
-            transition: border-color 0.2s;
-        }
-
-        .search-container input:focus {
-            border-color: var(--primary-accent);
-        }
-
-        .search-container i {
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            font-size: 16px;
-        }
-
-        /* --- TOOLS GRID --- */
-        .section-title {
-            font-size: 18px;
-            color: var(--text-muted);
-            margin: 30px 0 20px 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
-        }
-
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .tool-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 25px;
-            text-decoration: none;
-            color: var(--text-color);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .tool-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-accent);
-            box-shadow: 0 12px 24px rgba(0, 210, 255, 0.15);
-        }
-
-        .icon-wrapper {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: #ffffff;
-        }
-
-        .tool-card h3 {
-            margin: 0;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .tool-card p {
-            margin: 0;
-            color: var(--text-muted);
-            font-size: 13.5px;
-            line-height: 1.5;
-            flex-grow: 1;
+            .sidebar { width: 100%; position: relative; height: auto; }
+            body.rtl-mode .sidebar { border-left: none; border-bottom: 1px solid var(--border-color); }
+            .main-content { margin-left: 0 !important; margin-right: 0 !important; padding: 20px; }
+            .top-bar { flex-direction: column; align-items: flex-start; gap: 15px; }
         }
     </style>
 </head>
@@ -223,102 +87,167 @@
 
     <div class="sidebar">
         <div class="sidebar-header">
-            <h2><i class="fa-solid fa-cubes"></i> Dashboard Hub</h2>
+            <h2 id="logo-text"><i class="fa-solid fa-cubes"></i> Tools Hub</h2>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="#" class="active"><i class="fa-solid fa-house"></i> Home Dashboard</a></li>
-            <li><a href="#text-section"><i class="fa-solid fa-font"></i> Text Tools</a></li>
-            <li><a href="#design-section"><i class="fa-solid fa-palette"></i> Design & FX Tools</a></li>
-            <li><a href="#finance-section"><i class="fa-solid fa-wallet"></i> Finance Tools</a></li>
+            <li><a class="active" onclick="filterCategory('all')" id="menu-all"><i class="fa-solid fa-house"></i> <span>All Tools</span></a></li>
+            <li><a onclick="filterCategory('text')" id="menu-text"><i class="fa-solid fa-font"></i> <span>Text Tools</span></a></li>
+            <li><a onclick="filterCategory('design')" id="menu-design"><i class="fa-solid fa-palette"></i> <span>Design Tools</span></a></li>
+            <li><a onclick="filterCategory('calc')" id="menu-calc"><i class="fa-solid fa-calculator"></i> <span>Calculators</span></a></li>
+            <li><a onclick="filterCategory('dev')" id="menu-dev"><i class="fa-solid fa-code"></i> <span>Developer</span></a></li>
+            <li><a onclick="filterCategory('crypto')" id="menu-crypto"><i class="fa-solid fa-coins"></i> <span>Crypto & Finance</span></a></li>
         </ul>
         <div class="sidebar-footer">
-            <p>&copy; 2026 Local Tools Hub</p>
+            <p>&copy; 2026 Web Tools Hub</p>
         </div>
     </div>
 
     <div class="main-content">
-        <div class="dashboard-header">
-            <h1>Welcome to Web Tools Hub</h1>
-            <p>High-quality utility tools running 100% locally in your browser for absolute privacy.</p>
+        <div class="top-bar">
+            <div>
+                <h1 id="main-title">Web Tools Hub</h1>
+                <p id="main-desc">High-quality professional utility tools running 100% locally in your browser.</p>
+            </div>
+            <button class="lang-btn" onclick="toggleLanguage()" id="langBtn"><i class="fa-solid fa-language"></i> العربية</button>
         </div>
 
         <div class="search-container">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="toolSearch" placeholder="Search for tools instantly..." oninput="filterTools()">
+            <input type="text" id="toolSearch" placeholder="Search for tools instantly..." oninput="renderTools()">
         </div>
 
-        <div class="section-title" id="text-section">Text & Content Utilities</div>
-        <div class="tools-grid">
-            
-            <a href="tools/word-counter/index.html" class="tool-card">
-                <div class="icon-wrapper" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
-                    <i class="fa-solid fa-calculator"></i>
-                </div>
-                <h3>Word & Character Counter</h3>
-                <p>Analyze your text structure instantly. Count words, lines, spaces, and paragraphs in real time.</p>
-            </a>
-
-        </div>
-
-        <div class="section-title" id="design-section">Design & Visual Tools (100% Local)</div>
-        <div class="tools-grid">
-            
-            <a href="tools/photo-editor/index.html" class="tool-card">
-                <div class="icon-wrapper" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
-                </div>
-                <h3>Photo FX Studio</h3>
-                <p>Apply live photo filters, adjust brightness, contrast, blur effects, and export high-quality graphics locally.</p>
-            </a>
-
-            <a href="tools/photo-overlay/index.html" class="tool-card">
-                <div class="icon-wrapper" style="background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);">
-                    <i class="fa-solid fa-layer-group"></i>
-                </div>
-                <h3>Photo Overlay Studio</h3>
-                <p>Combine photos, overlay branding logos, adjust scaling or positions fluidly, and download the combined image.</p>
-            </a>
-
-        </div>
-
-        <div class="section-title" id="finance-section">Calculators & Health</div>
-        <div class="tools-grid">
-            
-            <a href="tools/calories/index.html" class="tool-card">
-                <div class="icon-wrapper" style="background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);">
-                    <i class="fa-solid fa-heart-pulse"></i>
-                </div>
-                <h3>Calorie & BMR Calculator</h3>
-                <p>Calculate your daily energy expenditure, BMR, and track nutritional health values instantly.</p>
-            </a>
-
-            <a href="tools/currency/index.html" class="tool-card">
-                <div class="icon-wrapper" style="background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);">
-                    <i class="fa-solid fa-money-bill-transfer"></i>
-                </div>
-                <h3>Local Currency Exchanger</h3>
-                <p>Quick mathematical currency exchange rates helper working locally based on your inputs.</p>
-            </a>
-
-        </div>
+        <div id="dynamicGrid"></div>
     </div>
 
     <script>
-        function filterTools() {
-            const input = document.getElementById('toolSearch').value.toLowerCase();
-            const cards = document.getElementsByClassName('tool-card');
+        let currentLang = 'en';
+        let currentCategory = 'all';
+
+        // المصفوفة البرمجية الذهبية الكاملة لـ 25 أداة (شاملة تحديث الأداتين الجديدتين)
+        const toolsData = [
+            // --- TEXT TOOLS ---
+            { id: "word-counter", icon: "fa-solid fa-calculator", gradient: "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)", path: "tools/word-counter/index.html", category: "text", title: { en: "Word Counter", ar: "عداد الكلمات والحروف" }, desc: { en: "Analyze your texts instantly. Count words and characters.", ar: "تحليل نصوصك فورياً وحساب عدد الكلمات والحروف والأسطر." }},
+            { id: "text-diff", icon: "fa-solid fa-not-equal", gradient: "linear-gradient(135deg, #ff9966 0%, #ff5e62 100%)", path: "tools/text-diff/index.html", category: "text", title: { en: "Text Diff Checker", ar: "مقارن النصوص" }, desc: { en: "Compare two text blocks and highlighting differences instantly.", ar: "مقارنة كتلتين من النصوص وإبراز الفروقات والزيادات فوراً." }},
+            { id: "markdown", icon: "fa-solid fa-file-code", gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)", path: "tools/markdown/index.html", category: "text", title: { en: "Markdown Previewer", ar: "معاين الماركداون" }, desc: { en: "Write Markdown code and view fully rendered HTML output live.", ar: "كتابة أكواد الماركداون ومعاينتها فوراً كملفات HTML منسقة." }},
+            { id: "regex-tester", icon: "fa-solid fa-vial", gradient: "linear-gradient(135deg, #7f00ff 0%, #e100ff 100%)", path: "tools/regex/index.html", category: "text", title: { en: "Regex Tester", ar: "مختبر التعبيرات النمطية" }, desc: { en: "Test and validate regular expressions against standard strings.", ar: "اختبار وفحص التعبيرات النمطية (Regex) مع النصوص الحية." }},
+            { id: "case-converter", icon: "fa-solid fa-text-height", gradient: "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)", path: "tools/case-converter/index.html", category: "text", title: { en: "Case Converter", ar: "محول حالة الأحرف" }, desc: { en: "Change text letter case easily between UPPER, lower, Capitalized.", ar: "تحويل حالة الأحرف الإنجليزية بسهولة بين كبيرة وصغيرة وحروف بداية الجمل." }},
+
+            // --- DESIGN TOOLS (تمت إزالة الأدوات السابقة وإدراج الجديدتين) ---
+            { id: "photo-editor", icon: "fa-solid fa-wand-magic-sparkles", gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)", path: "tools/photo-editor/index.html", category: "design", title: { en: "Photo FX Studio", ar: "استوديو فلاتر الصور" }, desc: { en: "Apply live photo filters, adjust brightness, contrast, blur effects locally.", ar: "تطبيق فلاتر حية على الصور، تعديل الإضاءة، التباين، والضبابية محلياً." }},
+            { id: "photo-overlay", icon: "fa-solid fa-layer-group", gradient: "linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%)", path: "tools/photo-overlay/index.html", category: "design", title: { en: "Photo Overlay Studio", ar: "استوديو دمج وتراكب الصور" }, desc: { en: "Combine photos, overlay branding logos, and adjust scaling fluidly.", ar: "دمج الصور، تركيب الشعارات والإطارات، والتحكم بالحجم والمحاذاة بسلاسة." }},
+            { id: "color-picker", icon: "fa-solid fa-eye-dropper", gradient: "linear-gradient(135deg, #3a7bd5 0%, #3a6073 100%)", path: "tools/color-picker/index.html", category: "design", title: { en: "HEX Color Picker", ar: "أداة منتقي الألوان" }, desc: { en: "Select beautiful canvas digital colors and extract precise HEX codes.", ar: "اختيار وتنسيق الألوان الرقمية واستخراج أكواد HEX بدقة للمصممين." }},
+            { id: "svg-optimizer", icon: "fa-solid fa-bezier-curve", gradient: "linear-gradient(135deg, #f12711 0%, #f5af19 100%)", path: "tools/svg-optimizer/index.html", category: "design", title: { en: "SVG Optimizer", ar: "محسن ومصغر ملفات SVG" }, desc: { en: "Minify and clean up SVG vector images graphics securely.", ar: "تنظيف الأكواد الزائدة في ملفات الـ SVG المتجهة وتصغير حجمها." }},
+            { id: "image-cropper", icon: "fa-solid fa-crop-simple", gradient: "linear-gradient(135deg, #d3cbb8 0%, #6d6d6d 100%)", path: "tools/cropper/index.html", category: "design", title: { en: "Image Cropper", ar: "أداة قص وتأطير الصور" }, desc: { en: "Crop and adjust visual dimensions of images flawlessly local.", ar: "قص وضبط أبعاد الصور وتعديل قياساتها بدقة متناهية." }},
+
+            // --- CALCULATORS ---
+            { id: "calories", icon: "fa-solid fa-heart-pulse", gradient: "linear-gradient(135deg, #ff9966 0%, #ff5e62 100%)", path: "tools/calories/index.html", category: "calc", title: { en: "Calorie & BMR Calculator", ar: "حاسبة السعرات والـ BMR" }, desc: { en: "Calculate your daily energy expenditure, BMR, and track health.", ar: "حساب السعرات الحرارية ومعدل الأيض اليومي بناءً على نشاطك وجسدك." }},
+            { id: "bmi-calc", icon: "fa-solid fa-weight-scale", gradient: "linear-gradient(135deg, #00c6ff 0%, #0072ff 100%)", path: "tools/bmi/index.html", category: "calc", title: { en: "BMI Calculator", ar: "حاسبة كتلة الجسم" }, desc: { en: "Check your body mass index dynamically to evaluate physical status.", ar: "فحص مؤشر كتلة الجسم وتقييم الوزن المثالي والصحي." }},
+            { id: "loan-calc", icon: "fa-solid fa-hand-holding-dollar", gradient: "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)", path: "tools/loan/index.html", category: "calc", title: { en: "Loan EMI Calculator", ar: "حاسبة القروض والأقساط" }, desc: { en: "Determine monthly equated payments and interest breakdown easily.", ar: "حساب الأقساط الشهرية المترتبة على القروض ونسب الفوائد بدقة." }},
+            { id: "age-calc", icon: "fa-solid fa-cake-candles", gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)", path: "tools/age/index.html", category: "calc", title: { en: "Age Calculator", ar: "حاسبة العمر الدقيقة" }, desc: { en: "Find out your precise age down to years, months, days and minutes.", ar: "معرفة عمرك الدقيق وتفاصيل ميلادك بالسنوات والأشهر والأيام والدقائق." }},
+            { id: "scientific-calc", icon: "fa-solid fa-square-root-variable", gradient: "linear-gradient(135deg, #7f00ff 0%, #e100ff 100%)", path: "tools/scientific-calc/index.html", category: "calc", title: { en: "Scientific Calculator", ar: "الحاسبة العلمية المتقدمة" }, desc: { en: "Solve advanced algebraic and mathematical equations locally.", ar: "إجراء العمليات الحسابية والمعادلات الرياضية والهندسية المعقدة." }},
+
+            // --- DEVELOPER TOOLS ---
+            { id: "json-formatter", icon: "fa-solid fa-code", gradient: "linear-gradient(135deg, #00c6ff 0%, #0072ff 100%)", path: "tools/json/index.html", category: "dev", title: { en: "JSON Formatter", ar: "منسق ومنظم ملفات JSON" }, desc: { en: "Validate, format, parse and beautify JSON raw string records.", ar: "فحص وتنسيق وترتيب ملفات الـ JSON وتجميلها لتسهيل قراءتها." }},
+            { id: "base64", icon: "fa-solid fa-arrow-right-arrows-left", gradient: "linear-gradient(135deg, #f12711 0%, #f5af19 100%)", path: "tools/base64/index.html", category: "dev", title: { en: "Base64 Encoder/Decoder", ar: "محول ومسفر الـ Base64" }, desc: { en: "Encode strings or decode base64 representations immediately.", ar: "تشفير النصوص والملفات إلى ترميز Base64 أو فك تشفيرها فوراً." }},
+            { id: "html-minifier", icon: "fa-solid fa-compress", gradient: "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)", path: "tools/html-minify/index.html", category: "dev", title: { en: "HTML Minifier", ar: "مضغط ومصغر أكواد HTML" }, desc: { en: "Compress web pages markup codes to maximize loading speeds.", ar: "ضغط أكواد الويب وتقليل حجم ملفات HTML لرفع سرعة التحميل." }},
+            { id: "jwt-decoder", icon: "fa-solid fa-key", gradient: "linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%)", path: "tools/jwt/index.html", category: "dev", title: { en: "JWT Token Decoder", ar: "محلل ومفكك رموز JWT" }, desc: { en: "Decode JSON Web Tokens safely and view headers and payloads.", ar: "فك وتحليل شفرات رموز JWT ومعاينة البيانات المدفونة بداخلها." }},
+            { id: "url-encoder", icon: "fa-solid fa-link", gradient: "linear-gradient(135deg, #ff9966 0%, #ff5e62 100%)", path: "tools/url-encoder/index.html", category: "dev", title: { en: "URL Encoder/Decoder", ar: "منظم ومسفر روابط الويب" }, desc: { en: "Convert web addresses links syntax elements safely and quickly.", ar: "ترميز وفك ترميز الروابط والـ URLs لتفادي مشاكل الرموز الخاصة." }},
+
+            // --- CRYPTO & FINANCE ---
+            { id: "currency", icon: "fa-solid fa-money-bill-transfer", gradient: "linear-gradient(135deg, #00c6ff 0%, #0072ff 100%)", path: "tools/currency/index.html", category: "crypto", title: { en: "Local Currency Exchanger", ar: "محول العملات المحلي" }, desc: { en: "Quick mathematical currency exchange rates helper based on your inputs.", ar: "أداة حسابية سريعة لتبديل العملات محلياً بناءً على مدخلاتك الحرة." }},
+            { id: "crypto-rates", icon: "fa-solid fa-cubes-stacked", gradient: "linear-gradient(135deg, #f12711 0%, #f5af19 100%)", path: "tools/crypto-rates/index.html", category: "crypto", title: { en: "Crypto Rates Matrix", ar: "لوحة أسعار الكريبتو الحسابية" }, desc: { en: "Local grid spreadsheet simulator to compute crypto coins fractions.", ar: "جدول محاكاة محلي لحساب تحويلات وكسور العملات الرقمية يدوياً." }},
+            { id: "compound-calc", icon: "fa-solid fa-chart-line", gradient: "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)", path: "tools/compound/index.html", category: "crypto", title: { en: "Compound Interest Calc", ar: "حاسبة الفوائد المركبة" }, desc: { en: "Simulate and project long term growth with compounding algorithms.", ar: "محاكاة وحساب نمو الأرباح والاستثمارات ذات العوائد المركبة." }},
+            { id: "discount-calc", icon: "fa-solid fa-tags", gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)", path: "tools/discount/index.html", category: "crypto", title: { en: "Discount & Tax Calculator", ar: "حاسبة الخصومات والضرائب" }, desc: { en: "Compute final prices instantly applying markdown rates and percentages.", ar: "حساب السعر النهائي للمنتجات بعد تطبيق نسب الخصم وضريبة المبيعات." }},
+            { id: "unit-converter", icon: "fa-solid fa-scale-unbalanced", gradient: "linear-gradient(135deg, #7f00ff 0%, #e100ff 100%)", path: "tools/units/index.html", category: "crypto", title: { en: "Universal Unit Converter", ar: "محول الوحدات القياسية العالمي" }, desc: { en: "Convert length, weight, volume, and temperature configurations.", ar: "التحويل الشامل بين وحدات القياس كالأطوال والأوزان والحرارة." }}
+        ];
+
+        // القاموس الثابت لواجهة المستخدم باللغتين
+        const uiStrings = {
+            en: { logo: "Tools Hub", all: "All Tools", text: "Text Tools", design: "Design Tools", calc: "Calculators", dev: "Developer", crypto: "Crypto & Finance", title: "Web Tools Hub", desc: "High-quality professional utility tools running 100% locally in your browser.", search: "Search for tools instantly...", langBtn: "العربية" },
+            ar: { logo: "مركز الأدوات", all: "جميع الأدوات", text: "أدوات النصوص", design: "أدوات التصميم", calc: "الحاسبات", dev: "المطورين", crypto: "المالية والكريبتو", title: "منصة الأدوات الذكية", desc: "أدوات برمجية واحترافية فائقة السرعة تعمل محلياً 100% داخل جهازك دون أي ربط.", search: "ابحث عن أي أداة فوراً...", langBtn: "English" }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            const htmlTag = document.getElementById('html-tag');
             
-            for (let i = 0; i < cards.length; i++) {
-                const title = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
-                const desc = cards[i].getElementsByTagName('p')[0].innerText.toLowerCase();
-                
-                if (title.includes(input) || desc.includes(input)) {
-                    cards[i].style.display = "flex";
-                } else {
-                    cards[i].style.display = "none";
-                }
+            if (currentLang === 'ar') {
+                htmlTag.setAttribute('dir', 'rtl');
+                document.body.classList.add('rtl-mode');
+            } else {
+                htmlTag.removeAttribute('dir');
+                document.body.classList.remove('rtl-mode');
             }
+
+            // تحديث نصوص القوائم والواجهات
+            document.getElementById('logo-text').innerHTML = `<i class="fa-solid fa-cubes"></i> ${uiStrings[currentLang].logo}`;
+            document.getElementById('menu-all').getElementsByTagName('span')[0].innerText = uiStrings[currentLang].all;
+            document.getElementById('menu-text').getElementsByTagName('span')[0].innerText = uiStrings[currentLang].text;
+            document.getElementById('menu-design').getElementsByTagName('span')[0].innerText = uiStrings[currentLang].design;
+            document.getElementById('menu-calc').getElementsByTagName('span')[0].innerText = uiStrings[currentLang].calc;
+            document.getElementById('menu-dev').getElementsByTagName('span')[0].innerText = uiStrings[currentLang].dev;
+            document.getElementById('menu-crypto').getElementsByTagName('span')[0].innerText = uiStrings[currentLang].crypto;
+            
+            document.getElementById('main-title').innerText = uiStrings[currentLang].title;
+            document.getElementById('main-desc').innerText = uiStrings[currentLang].desc;
+            document.getElementById('toolSearch').placeholder = uiStrings[currentLang].search;
+            document.getElementById('langBtn').innerHTML = `<i class="fa-solid fa-language"></i> ${uiStrings[currentLang].langBtn}`;
+
+            renderTools();
         }
+
+        function filterCategory(category) {
+            currentCategory = category;
+            
+            // تحديث كلاس النشاط (Active) في القائمة الجانبية
+            const links = document.querySelectorAll('.sidebar-menu li a');
+            links.forEach(link => link.classList.remove('active'));
+            document.getElementById(`menu-${category}`).classList.add('active');
+
+            renderTools();
+        }
+
+        function renderTools() {
+            const container = document.getElementById('dynamicGrid');
+            const searchVal = document.getElementById('toolSearch').value.toLowerCase();
+            container.innerHTML = "";
+
+            // تصنيف المجموعات الفردية لفرز معنون
+            const categoriesToRender = currentCategory === 'all' ? ['text', 'design', 'calc', 'dev', 'crypto'] : [currentCategory];
+
+            categoriesToRender.forEach(cat => {
+                // تصفية العناصر بناء على المجموعة وبناء على مدخل البحث الحي
+                const filtered = toolsData.filter(t => t.category === cat && (t.title[currentLang].toLowerCase().includes(searchVal) || t.desc[currentLang].toLowerCase().includes(searchVal)));
+                
+                if (filtered.length > 0) {
+                    // توليد عنوان القسم
+                    const titleSection = document.createElement('div');
+                    titleSection.className = 'section-title';
+                    titleSection.innerText = uiStrings[currentLang][cat];
+                    container.appendChild(titleSection);
+
+                    // توليد شبكة الأدوات التابعة للقسم
+                    const grid = document.createElement('div');
+                    grid.className = 'tools-grid';
+
+                    filtered.forEach(tool => {
+                        grid.innerHTML += `
+                            <a href="${tool.path}" class="tool-card">
+                                <div class="icon-wrapper" style="background: ${tool.gradient};">
+                                    <i class="${tool.icon}"></i>
+                                </div>
+                                <h3>${tool.title[currentLang]}</h3>
+                                <p>${tool.desc[currentLang]}</p>
+                            </a>
+                        `;
+                    });
+                    container.appendChild(grid);
+                }
+            });
+        }
+
+        // تشغيل أولي لعرض لوحة التحكم بشكل مثالي
+        renderTools();
     </script>
 </body>
 </html>
